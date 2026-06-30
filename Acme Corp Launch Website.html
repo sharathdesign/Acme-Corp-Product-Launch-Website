@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=1440">
   <title>Acme Corp – Landing Page</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,7 +50,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       background: #fff;
-      min-width: 320px;
+      min-width: 1440px;
       color: #111;
       overflow-x: hidden;
       /* Fix font appearing heavier than it is on macOS */
@@ -105,7 +105,7 @@
       position: sticky;
       top: 0;
       z-index: 200;
-      width: 100%;
+      width: 1440px;
       padding: 20px 0;
       background: #fff;
       transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease,
@@ -225,7 +225,7 @@
       background: #fff;
       overflow: hidden;
       position: relative;
-      width: 100%;
+      width: 1440px;
     }
     /* Background grid — pure CSS, always visible, no external images */
     .hero-bg-pattern {
@@ -329,7 +329,7 @@
     .logo-strip {
       padding: 64px 0;
       overflow: hidden;
-      width: 100%;
+      width: 1440px;
     }
     .logo-strip-inner {
       display: flex;
@@ -391,11 +391,11 @@
     .problem-scroll-wrap {
       position: relative;
       height: 280vh;
-      width: 100%;
+      width: 1440px;
     }
     .problem {
       background: #fff;
-      width: 100%;
+      width: 1440px;
       position: sticky;
       top: 0;
       min-height: 100vh;
@@ -458,7 +458,7 @@
       gap: 64px;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: 1440px;
     }
     .features-group {
       display: flex;
@@ -620,7 +620,7 @@
       padding: 96px 0;
       display: flex; flex-direction: column;
       gap: 64px; align-items: center;
-      width: 100%;
+      width: 1440px;
     }
     .explore-content {
       display: flex; flex-direction: column;
@@ -690,13 +690,12 @@
       padding: 96px 0;
       display: flex; flex-direction: column;
       gap: 64px; align-items: center;
-      width: 100%;
+      width: 1440px;
     }
     .faq-list {
       display: flex; flex-direction: column;
       gap: 16px;
-      width: 100%;
-      max-width: 768px;
+      width: 768px;
     }
     .faq-item {
       background: #fff;
@@ -764,7 +763,7 @@
       padding: 96px 0;
       display: flex; flex-direction: column;
       gap: 48px; align-items: center;
-      width: 100%;
+      width: 1440px;
     }
     .cta-text-wrap {
       max-width: 1280px; padding: 0 40px;
@@ -792,7 +791,7 @@
       background: #25272d;
       display: flex; flex-direction: column;
       align-items: center;
-      width: 100%;
+      width: 1440px;
     }
     .footer-main {
       display: flex; flex-direction: column;
@@ -963,197 +962,11 @@
       background-clip: text;
     }
 
-    /* ═══════════════════════════════════════════════════════════════
-       RESPONSIVE — Desktop: 1920–1024px  |  Mobile: 425–320px
-    ═══════════════════════════════════════════════════════════════ */
-
-    /* ── Tablet / small desktop (≤1280px) ── */
-    @media (max-width: 1280px) {
-      .nav-inner-wrap { padding: 0 24px; }
-      .nav-row { max-width: 100%; }
-      .hero-content { padding: 96px 24px 0; }
-      .hero-mockup-wrap { padding: 0 24px 48px; }
-      .logo-strip-inner { padding: 0 24px; }
-      .section-header { padding: 0 24px; }
-      .features-group { padding: 24px; }
-      .explore-content { padding: 0 24px; }
-      .faq > div { padding: 0 24px !important; }
-      .cta-text-wrap { padding: 0 24px; }
-      .footer-top, .footer-bottom { padding: 0 24px; }
-      .footer-biglogo-clip { padding: 0 24px; }
-      .problem-inner { padding: 96px 24px; }
-    }
-
-    /* ── Laptop breakpoint (≤1024px) ── */
-    @media (max-width: 1024px) {
-      .hero-headline { font-size: 48px; line-height: 56px; }
-      .features-group { gap: 40px; }
-      .feature-menu-left, .feature-menu-right { max-width: 320px; }
-      .feature-img-wrap { height: 420px; }
-      .feature-img-box, .feature-bg-box { height: 420px; }
-      .footer-cols { gap: 32px 64px; }
-      .footer-link-cols { flex-wrap: wrap; gap: 24px; }
-      .footer-link-col { min-width: 140px; }
-    }
-
-    /* ── Mobile hamburger button ── */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      padding: 8px;
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #111;
-      border-radius: 2px;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* ── Mobile (≤768px) — nav collapses ── */
-    @media (max-width: 768px) {
-      .nav-hamburger { display: flex; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0; right: 0;
-        background: #fff;
-        flex-direction: column;
-        padding: 12px 24px 16px;
-        gap: 4px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        z-index: 199;
-      }
-      .nav-links.open { display: flex; }
-      .nav-buttons { gap: 8px; }
-      .nav-buttons .btn-outline, .nav-buttons .btn-dark { padding: 7px 10px; font-size: 13px; }
-    }
-
-    /* ── Mobile (≤425px) ── */
-    @media (max-width: 425px) {
-      /* Hero */
-      .hero-content { padding: 64px 16px 0; gap: 40px; }
-      .hero-headline { font-size: 32px; line-height: 40px; }
-      .hero-sub { font-size: 16px; line-height: 24px; }
-      .hero-buttons { flex-direction: column; width: 100%; }
-      .btn-outline-lg, .btn-dark-lg { width: 100%; text-align: center; padding: 12px 16px; }
-      .hero-mockup-wrap { padding: 0 16px 40px; }
-      .hero-mockup-overlay { width: 90%; height: auto; aspect-ratio: 1076/692; }
-
-      /* Logo strip */
-      .logo-strip { padding: 40px 0; }
-      .logo-strip-inner {
-        padding: 0 16px;
-        gap: 24px;
-        justify-content: center;
-        row-gap: 24px;
-      }
-      .logo-item { flex-shrink: 0; transform: scale(0.8); transform-origin: center; }
-
-      /* Nav */
-      .nav-inner-wrap { padding: 0 16px; }
-      .nav-buttons .btn-outline { display: none; }
-
-      /* Problem */
-      .problem-inner { padding: 64px 16px; }
-      .problem-p1, .problem-p2 { font-size: 24px; line-height: 32px; }
-      .problem-body { gap: 40px; }
-
-      /* Section header */
-      .section-header { padding: 0 16px; }
-      .section-title { font-size: 28px !important; line-height: 36px !important; }
-
-      /* Features */
-      .features { padding: 64px 0; gap: 40px; }
-      .features-group {
-        flex-direction: column;
-        padding: 16px;
-        gap: 24px;
-      }
-      .feature-menu-left,
-      .feature-menu-right {
-        max-width: 100%;
-        width: 100%;
-        border-left: none;
-        border-right: none;
-        border-top: 2px solid #e6e6e6;
-      }
-      .feature-card.active-left::before,
-      .feature-card.active-right::before {
-        top: -2px;
-        left: 0;
-        right: auto;
-        width: 100%;
-        height: 2px;
-      }
-      .feature-card.active-left::before { animation: featureLoadH 5s linear forwards; }
-      @keyframes featureLoadH { from { width: 0%; } to { width: 100%; } }
-      .feature-menu-left .feature-card::after,
-      .feature-menu-right .feature-card::after { display: none; }
-      .feature-img-wrap { height: auto; width: 100%; order: -1; }
-      .feature-img-box, .feature-bg-box { height: 220px; }
-      .feature-img-inner { width: 100%; height: 100%; left: 0; border-radius: 16px; }
-
-      /* Explore */
-      .explore { padding: 64px 0; gap: 40px; }
-      .explore-content { padding: 0 16px; gap: 24px; }
-      .explore-tabs {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        gap: 0;
-        justify-content: flex-start;
-      }
-      .explore-tabs::-webkit-scrollbar { display: none; }
-      .explore-tab { flex-shrink: 0; padding: 12px 16px; }
-      .explore-tab-title { font-size: 14px; }
-      .explore-overlay { width: 90%; height: auto; aspect-ratio: 1076/692; }
-
-      /* FAQ */
-      .faq { padding: 64px 0; gap: 40px; }
-      .faq > div { padding: 0 16px !important; }
-      .faq-q { font-size: 16px; line-height: 24px; }
-      .faq-a { font-size: 14px; line-height: 22px; }
-      .faq-item { padding: 20px; }
-
-      /* CTA */
-      .cta { padding: 64px 0; gap: 32px; }
-      .cta-text-wrap { padding: 0 16px; }
-      .cta-headline { font-size: 32px !important; line-height: 40px !important; }
-      .cta-buttons { flex-direction: column; width: 100%; padding: 0 16px; box-sizing: border-box; }
-
-      /* Footer */
-      .footer-top, .footer-bottom { padding: 0 16px; }
-      .footer-cols { flex-direction: column; gap: 32px; }
-      .footer-link-cols { flex-wrap: wrap; gap: 24px 16px; }
-      .footer-link-col { min-width: calc(50% - 8px); }
-      .footer-bottom-row { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .footer-biglogo-clip { padding: 0 16px; }
-      .footer-main { gap: 40px; }
-    }
-
-    /* ── Narrow mobile (≤375px) ── */
-    @media (max-width: 375px) {
-      .hero-headline { font-size: 28px; line-height: 36px; }
-      .cta-headline { font-size: 28px !important; line-height: 36px !important; }
-      .problem-p1, .problem-p2 { font-size: 22px; line-height: 30px; }
-      .footer-link-col { min-width: 100%; }
-    }
 
   </style>
 </head>
 <body>
-<div style="width:100%;max-width:1920px;margin:0 auto;position:relative;">
+<div style="width:1440px;margin:0 auto;position:relative;">
 
   <!-- ═══════════════════════════ NAV ══════════════════════════════ -->
   <nav class="nav" id="nav">
@@ -1175,9 +988,6 @@
         </nav>
         <!-- CTA -->
         <div class="nav-buttons">
-          <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-          </button>
           <button class="btn-outline">Log in</button>
           <button class="btn-dark">Sign up</button>
         </div>
@@ -3111,23 +2921,6 @@
       }
     });
   }
-
-  /* ── Mobile nav hamburger toggle ── */
-  (function () {
-    var btn = document.getElementById('navHamburger');
-    var links = document.querySelector('.nav-links');
-    if (!btn || !links) return;
-    btn.addEventListener('click', function () {
-      var open = links.classList.toggle('open');
-      btn.classList.toggle('open', open);
-    });
-    document.addEventListener('click', function (e) {
-      if (!nav.contains(e.target)) {
-        links.classList.remove('open');
-        btn.classList.remove('open');
-      }
-    });
-  })();
 
   /* ── FAQ accordion — always one open ── */
   (function () {
