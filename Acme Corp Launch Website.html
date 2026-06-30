@@ -1,0 +1,3151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acme Corp – Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Preload hero mockup background so it's in cache before the section paints -->
+  <link rel="preload" as="image" href="acme-assets/bf103610-8d89-491f-a27e-ed0419f454a7.jpg">
+  <!-- Preload mockup overlay (dashboard screenshot) -->
+  <link rel="preload" as="image" href="acme-assets/7dbbe92a-79db-4e49-99dc-4f7edc1bbcbe.jpg">
+  <!-- JS feature gradient BG (shared across all 8 slides) -->
+  <link rel="preload" as="image" href="acme-assets/js-f1bg0.jpg">
+  <link rel="preload" as="image" href="acme-assets/explore-bg.jpg">
+  <!-- JS feature overlays (section 1) -->
+  <link rel="preload" as="image" href="acme-assets/js-f1ov0.jpg">
+  <link rel="preload" as="image" href="acme-assets/js-f1ov1.jpg">
+  <link rel="preload" as="image" href="acme-assets/js-f1ov2.jpg">
+  <link rel="preload" as="image" href="acme-assets/js-f1ov3.jpg">
+  <!-- JS feature overlays (section 2) -->
+  <link rel="preload" as="image" href="acme-assets/js-f2ov0.jpg">
+  <link rel="preload" as="image" href="acme-assets/js-f2ov1.jpg">
+  <link rel="preload" as="image" href="acme-assets/js-f2ov2.jpg">
+  <link rel="preload" as="image" href="acme-assets/js-f2ov3.jpg">
+  <!-- Explore overlays -->
+  <link rel="preload" as="image" href="acme-assets/605b7f20-057d-4041-9c9c-f43960b1d445.jpg">
+  <link rel="preload" as="image" href="acme-assets/6c62c5ab-54d3-441a-803e-4b3022671bfe.jpg">
+  <link rel="preload" as="image" href="acme-assets/a4c09a40-c826-4ef3-bcbf-2923fcdffeb3.jpg">
+  <link rel="preload" as="image" href="acme-assets/ac8215a2-2765-41e1-95c6-3ffa89ac87d6.jpg">
+  <!-- Institute assets -->
+  <link rel="preload" as="image" href="acme-assets/i-hero.jpg">
+  <link rel="preload" as="image" href="acme-assets/i-hero-ov.jpg">
+  <!-- Recruiter assets -->
+  <link rel="preload" as="image" href="acme-assets/r-hero.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-hero-ov.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-bg.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f1s0.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f1s1.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f1s2.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f1s3.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f2s0.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f2s1.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f2s2.jpg">
+  <link rel="preload" as="image" href="acme-assets/r-f2s3.jpg">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      background: #fff;
+      min-width: 320px;
+      color: #111;
+      overflow-x: hidden;
+      /* Fix font appearing heavier than it is on macOS */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    a { text-decoration: none; color: inherit; font-weight: 400; }
+    button { font-family: inherit; font-weight: 400; cursor: pointer; border: none; background: none; }
+    p, span, h1, h2, h3, h4 { font-weight: 400; }
+
+    /* ─── Option A: Expressive / Editorial ─────────────────────
+       Single easing curve: cubic-bezier(0.16, 1, 0.3, 1)
+       Rise 20px + fade, 0.65s. Stagger via --rv-delay.
+    ─────────────────────────────────────────────────────────── */
+    :root { --ease-a: cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* Hero: fires immediately (no observer needed) */
+    @keyframes rv {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes rv-scale {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+    .anim-fadeup { animation: rv       0.65s var(--ease-a) both; }
+    .anim-scalup { animation: rv-scale 0.75s var(--ease-a) both; }
+    .anim-fadein { animation: rv       0.65s var(--ease-a) both; }
+    .d100 { animation-delay: 0.10s; }
+    .d200 { animation-delay: 0.20s; }
+    .d320 { animation-delay: 0.32s; }
+    .d440 { animation-delay: 0.44s; }
+    .d560 { animation-delay: 0.56s; }
+    .d680 { animation-delay: 0.68s; }
+
+    /* Scroll-triggered: elements start hidden, .rv-in fires the animation */
+    .rv {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s var(--ease-a),
+                  transform 0.65s var(--ease-a);
+      transition-delay: var(--rv-delay, 0s);
+    }
+    .rv.rv-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      width: 100%;
+      padding: 20px 0;
+      background: #fff;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease,
+                  transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav.nav-hidden {
+      transform: translateY(-100%);
+    }
+    .nav.scrolled {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+    }
+    .nav-inner-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .nav-row {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 16px;
+    }
+    /* Logo — inline, no external img */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .nav-logo-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 20px;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+    /* Nav links */
+    .nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #111;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-link:hover    { background: rgba(0,0,0,0.05); }
+    .nav-link:active   { background: rgba(0,0,0,0.10); }
+    /* CTA buttons */
+    .nav-buttons { display: flex; gap: 12px; align-items: center; }
+    .btn-outline {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px; line-height: 20px;
+      color: #111;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+    .btn-outline:hover  { background: #f5f5f5; border-color: #d0d0d0; }
+    .btn-outline:active { background: #ebebeb; transform: scale(0.98); }
+    .btn-dark {
+      background: #25272d;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px; line-height: 20px;
+      color: #fff;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .btn-dark:hover  { background: #3a3d47; }
+    .btn-dark:active { background: #1a1c20; transform: scale(0.98); }
+    .btn-outline-lg {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px; line-height: 20px;
+      color: #111;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+    .btn-outline-lg:hover  { background: #f5f5f5; border-color: #d0d0d0; }
+    .btn-outline-lg:active { background: #ebebeb; transform: scale(0.98); }
+    .btn-dark-lg {
+      background: #25272d;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px; line-height: 20px;
+      color: #fff;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .btn-dark-lg:hover  { background: #3a3d47; }
+    .btn-dark-lg:active { background: #1a1c20; transform: scale(0.98); }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    .hero-wrap {
+      background: #fff;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    /* Background grid — pure CSS, always visible, no external images */
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      /* crosshatch grid */
+      background-image:
+        linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+      background-size: 80px 80px;
+      /* fade away at bottom so it doesn't bleed into content sections */
+      -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 10%, black 20%, transparent 85%);
+      mask-image: radial-gradient(ellipse 90% 75% at 50% 10%, black 20%, transparent 85%);
+    }
+    /* Content */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 64px;
+      padding: 128px 40px 0;   /* ← 128px as requested */
+      width: 100%;
+    }
+    .hero-text-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      max-width: 1024px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .hero-headline {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 72px;
+      text-align: center;
+      color: #111;
+      width: 100%;
+      font-variation-settings: 'wdth' 100;
+    }
+    .hero-headline .grad {
+      background: linear-gradient(90deg, #ec77ab 5%, #7873f5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 28px;
+      color: #757575;
+      text-align: center;
+      max-width: 768px;
+    }
+    .hero-buttons { display: flex; gap: 12px; align-items: center; }
+    /* Mockup */
+    .hero-mockup-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 40px 64px;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-mockup {
+      width: 100%;
+      aspect-ratio: 1200 / 800;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-mockup > img.bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      pointer-events: none;
+    }
+    .hero-mockup-overlay {
+      position: absolute;
+      width: 1076px; height: 692px;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 16px;
+      overflow: clip;
+    }
+    .hero-mockup-overlay img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ─── LOGO STRIP ──────────────────────────────────────────── */
+    .logo-strip {
+      padding: 64px 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    .logo-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      row-gap: 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .logo-item {
+      flex-shrink: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      /* default: greyscale + dimmed */
+      transition: filter 0.55s cubic-bezier(0.4,0,0.2,1);
+      filter: grayscale(1) opacity(0.45);
+      cursor: default;
+    }
+    /* per-brand hover: synthesize brand color from greyscale via sepia+hue+saturate */
+    /* Netflix #E50914 */
+    #logo-netflix:hover, .logo-netflix:hover { filter: opacity(1) sepia(1) saturate(9)  hue-rotate(320deg) brightness(0.88); }
+    /* Stripe #635BFF */
+    #logo-stripe:hover,  .logo-stripe:hover  { filter: opacity(1) sepia(1) saturate(6)  hue-rotate(206deg) brightness(1.1);  }
+    /* Framer — brand color #111 (black wordmark) */
+    #logo-framer:hover,  .logo-framer:hover  { filter: opacity(1) grayscale(1) brightness(0.1);                              }
+    /* Dropbox #0061FF */
+    #logo-dropbox:hover, .logo-dropbox:hover { filter: opacity(1) sepia(1) saturate(10) hue-rotate(180deg) brightness(0.9);  }
+    /* HubSpot #FF7A59 */
+    #logo-hubspot:hover, .logo-hubspot:hover { filter: opacity(1) sepia(1) saturate(6)  hue-rotate(337deg) brightness(1.1);  }
+
+    /* ─── SHARED SECTION ─────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      max-width: 1280px;
+      padding: 0 40px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .section-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 48px;
+      color: #111;
+      text-align: center;
+      max-width: 768px;
+      width: 100%;
+      font-variation-settings: 'wdth' 100;
+    }
+
+    /* ─── PROBLEM ────────────────────────────────────────────── */
+    .problem-scroll-wrap {
+      position: relative;
+      height: 280vh;
+      width: 100%;
+    }
+    .problem {
+      background: #fff;
+      width: 100%;
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+    .problem-inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 96px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .problem-body {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      max-width: 768px;
+      width: 100%;
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 400;
+      font-variation-settings: 'wdth' 100;
+    }
+    .problem-p1,
+    .problem-p2 {
+      font-size: 40px;
+      line-height: 48px;
+      color: #111;
+    }
+    /* "Visibility Gap" — muted lavender before reveal */
+    .vis-gap {
+      color: #c4b5f4;
+    }
+    /* After reveal: full gradient */
+    .vis-gap.revealed {
+      background: linear-gradient(90deg, #EC77AB 0%, #8074F0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+    /* Individual word spans injected by JS */
+    .problem-word {
+      color: #b3b3b3;
+      transition: color 0.25s ease;
+      display: inline;
+    }
+    .problem-word.lit {
+      color: #111;
+    }
+
+    /* ─── FEATURES ───────────────────────────────────────────── */
+    .features {
+      background: #fff;
+      padding: 96px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .features-group {
+      display: flex;
+      gap: 64px;
+      align-items: flex-start;
+      max-width: 1280px;
+      padding: 40px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ── Feature menu ── */
+    .feature-menu-left {
+      flex: 1; min-width: 0; max-width: 560px;
+      border-left: 2px solid #e6e6e6;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .feature-menu-right {
+      flex: 1; min-width: 0; max-width: 560px;
+      border-right: 2px solid #e6e6e6;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+
+    /* ── Feature card base ── */
+    .feature-card {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 16px 24px;
+      text-align: left; width: 100%;
+      cursor: pointer;
+      position: relative;
+      transition: opacity 0.2s ease;
+      background: none; border: none; outline: none;
+    }
+    .feature-card:hover { opacity: 0.75; }
+    .feature-card:active { opacity: 0.5; }
+
+    /* Inactive title color dims slightly on sibling hover */
+    .feature-menu-left:hover .feature-card:not(.active-left) .feature-card-title,
+    .feature-menu-right:hover .feature-card:not(.active-right) .feature-card-title {
+      color: #555;
+    }
+
+    /* ── Active card ── */
+    .feature-card.active-left,
+    .feature-card.active-right {
+      opacity: 1 !important;
+      cursor: default;
+    }
+    /* Loader bar sits ON TOP of the gray border-left/right of the menu container.
+       We use a ::before on the card, offset to align with the parent border exactly. */
+    .feature-card.active-left::before,
+    .feature-card.active-right::before {
+      content: '';
+      position: absolute;
+      top: 0; width: 2px;
+      background: #111;
+      height: 0%;
+      z-index: 1;           /* above the parent's border */
+    }
+    /* Left-side menus: parent has border-left, card is flush to that border */
+    .feature-card.active-left::before  { left: -2px; }
+    /* Right-side menus: parent has border-right, card flush to that border */
+    .feature-card.active-right::before { right: -2px; }
+
+    /* Trigger the fill animation — 5s */
+    .feature-card.loading::before {
+      animation: featureLoad 5s linear forwards;
+    }
+    @keyframes featureLoad {
+      from { height: 0%; }
+      to   { height: 100%; }
+    }
+
+    /* Hover tint: gray overlay on the indicator line for inactive cards */
+    .feature-menu-left  .feature-card:not(.active-left):hover::after,
+    .feature-menu-right .feature-card:not(.active-right):hover::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; width: 2px;
+      background: rgba(0,0,0,0.35);
+      transition: opacity 0.2s ease;
+      z-index: 1;
+    }
+    .feature-menu-left  .feature-card::after { left: -2px; }
+    .feature-menu-right .feature-card::after { right: -2px; }
+
+    .feature-card-title {
+      font-family: 'Inter'; font-weight: 500;
+      font-size: 20px; line-height: 28px; color: #111; width: 100%;
+      transition: color 0.2s ease;
+    }
+    .feature-card-desc {
+      font-family: 'Inter'; font-weight: 400;
+      font-size: 16px; line-height: 24px; color: #757575; width: 100%;
+      display: none;
+    }
+    .feature-card.active-left  .feature-card-desc,
+    .feature-card.active-right .feature-card-desc { display: block; }
+
+    /* ── Feature image panel ── */
+    .feature-img-wrap {
+      flex: 1; min-width: 0;
+      height: 576px;
+      position: relative;        /* stacking context for slides */
+    }
+    /* Each slide is stacked absolutely inside the wrap */
+    .feature-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.55s var(--ease-a);
+      pointer-events: none;
+    }
+    .feature-slide.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* Graceful fade-in for any img that finishes loading while visible */
+    .feature-bg-box > img.bg,
+    .feature-img-inner img,
+    .explore-slide > img.bg,
+    .explore-overlay img {
+      opacity: 0;
+      transition: opacity 0.55s var(--ease-a);
+    }
+    .feature-bg-box > img.bg.loaded,
+    .feature-img-inner img.loaded,
+    .explore-slide > img.bg.loaded,
+    .explore-overlay img.loaded {
+      opacity: 1;
+    }
+    .feature-img-box {
+      width: 100%; height: 576px;
+      position: relative;
+    }
+    .feature-bg-box {
+      width: 100%; height: 576px;
+      position: relative;
+    }
+    .feature-bg-box > img.bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 24px; pointer-events: none;
+    }
+    .feature-img-overlay { position: absolute; inset: 0; overflow: clip; }
+    .feature-img-inner {
+      position: absolute;
+      width: 576px; height: 576px;
+      left: calc(50% - 288px);
+      top: 0;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .feature-img-inner img { position: absolute; max-width: none; pointer-events: none; }
+
+    /* ─── EXPLORE ────────────────────────────────────────────── */
+    .explore {
+      background: #fff;
+      padding: 96px 0;
+      display: flex; flex-direction: column;
+      gap: 64px; align-items: center;
+      width: 100%;
+    }
+    .explore-content {
+      display: flex; flex-direction: column;
+      gap: 40px; align-items: flex-start;
+      max-width: 1280px; padding: 0 40px;
+      width: 100%;
+    }
+    .explore-tabs {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid #e6e6e6;
+      width: 100%;
+      position: relative;
+    }
+    .explore-tab {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 16px 24px; flex-shrink: 0; cursor: pointer;
+      position: relative;
+      transition: opacity 0.2s ease;
+    }
+    .explore-tab.active { cursor: default; }
+    .explore-tab-title  { font-family: 'Inter'; font-weight: 500; font-size: 20px; line-height: 28px; color: #111; white-space: nowrap; }
+
+    /* Active loader bar — sits on top of the gray border-bottom */
+    .explore-tab.active::before {
+      content: ''; position: absolute;
+      bottom: -2px; left: 0; height: 2px; width: 0%; background: #111; z-index: 1;
+    }
+    .explore-tab.loading::before {
+      animation: exploreLoad 5s linear forwards;
+    }
+    @keyframes exploreLoad { from { width: 0%; } to { width: 100%; } }
+
+    /* Hover tint on bottom line for inactive tabs */
+    .explore-tab:not(.active):hover::after {
+      content: ''; position: absolute;
+      bottom: -2px; left: 0; height: 2px; width: 100%;
+      background: rgba(0,0,0,0.35); z-index: 1;
+    }
+
+    /* Slides */
+    .explore-mockup-wrap {
+      width: 100%; aspect-ratio: 1200/800; position: relative;
+    }
+    .explore-slide {
+      position: absolute; inset: 0; opacity: 0;
+      transition: opacity 0.55s var(--ease-a); pointer-events: none;
+      border-radius: 16px; overflow: hidden;
+    }
+    .explore-slide.visible { opacity: 1; pointer-events: auto; }
+    .explore-slide > img.bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 16px; pointer-events: none;
+    }
+    .explore-overlay {
+      position: absolute;
+      width: 1076px; height: 692px;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 16px; overflow: clip;
+    }
+    .explore-overlay img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ─── FAQ ────────────────────────────────────────────────── */
+    .faq {
+      background: #fff;
+      padding: 96px 0;
+      display: flex; flex-direction: column;
+      gap: 64px; align-items: center;
+      width: 100%;
+    }
+    .faq-list {
+      display: flex; flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      max-width: 768px;
+    }
+    .faq-item {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px; padding: 32px;
+      display: flex; flex-direction: column;
+      gap: 0; align-items: flex-start;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      user-select: none;
+    }
+    .faq-item:hover { background: #fafafa; border-color: #d0d0d0; }
+    .faq-item:active { background: #f2f2f2; }
+    .faq-item.open { background: #f5f5f5; border-color: #e6e6e6; }
+    .faq-item.open:hover { background: #f0f0f0; }
+    .faq-q-row {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; width: 100%;
+    }
+    .faq-q {
+      font-family: 'Inter'; font-weight: 400;
+      font-size: 20px; line-height: 28px;
+      color: #111; flex: 1; text-align: left;
+    }
+    /* chevron 24×24 per Figma spec */
+    .faq-icon {
+      width: 24px; height: 24px; flex-shrink: 0;
+      overflow: hidden; position: relative;
+    }
+    .faq-icon-inner {
+      position: absolute;
+      top: 37.5%; bottom: 37.5%; left: 25%; right: 25%;
+    }
+    .faq-icon-inner img {
+      position: absolute;
+      top: -13.92%; left: -6.96%; right: -6.96%; bottom: -13.92%;
+      width: 113.92%; height: 127.84%;
+      display: block; max-width: none;
+    }
+    /* Answer: hidden by default, animates open */
+    .faq-a-wrap {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s var(--ease-a), margin-top 0.5s var(--ease-a);
+      width: 100%;
+      margin-top: 0;
+      pointer-events: none;
+    }
+    .faq-item.open .faq-a-wrap {
+      pointer-events: auto;
+    }
+    .faq-item.open .faq-a-wrap {
+      max-height: 400px;
+      margin-top: 24px;
+    }
+    .faq-a {
+      font-family: 'Inter'; font-weight: 400;
+      font-size: 16px; line-height: 24px;
+      color: #757575; text-align: left; width: 100%;
+    }
+
+    /* ─── CTA ────────────────────────────────────────────────── */
+    .cta {
+      background: #fff;
+      padding: 96px 0;
+      display: flex; flex-direction: column;
+      gap: 48px; align-items: center;
+      width: 100%;
+    }
+    .cta-text-wrap {
+      max-width: 1280px; padding: 0 40px;
+      width: 100%;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .cta-text-inner { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .cta-headline {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 400; font-size: 64px; line-height: 72px;
+      text-align: center; max-width: 768px;
+      font-variation-settings: 'wdth' 100;
+    }
+    .cta-headline .black { color: #111; }
+    .cta-headline .grad {
+      background: linear-gradient(90deg, #ec77ab 5%, #7873f5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cta-buttons { display: flex; gap: 12px; align-items: center; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    .footer {
+      background: #25272d;
+      display: flex; flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .footer-main {
+      display: flex; flex-direction: column;
+      gap: 64px; align-items: center;
+      padding: 48px 0; width: 100%;
+    }
+    .footer-top {
+      max-width: 1280px; padding: 0 40px;
+      width: 100%;
+    }
+    /* gap: 48px row, 128px column */
+    .footer-cols {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 48px 128px;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .footer-brand {
+      display: flex; flex-direction: column;
+      gap: 20px; align-items: flex-start;
+      flex-shrink: 0;
+    }
+    .footer-logo {
+      width: 108px; height: 25.663px;
+      position: relative; flex-shrink: 0;
+    }
+    .footer-logo img { position: absolute; display: block; }
+    .footer-logo .lm { left: 0; top: 4.17%; bottom: 4.17%; right: 78.22%; width: 23px; height: 23px; object-fit: contain; }
+    .footer-logo .lt { left: 26.08%; right: 0.1%; top: 26.14%; bottom: 15.61%; width: 79px; height: 15px; object-fit: contain; }
+    .footer-badges { display: flex; gap: 16px; align-items: flex-start; }
+    /* Compliance badge: 48×48 inline SVG, always white */
+    .footer-badge {
+      width: 48px; height: 48px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-badge svg { display: block; width: 48px; height: 48px; }
+    /* Link columns wrapper */
+    .footer-link-cols {
+      display: flex; gap: 40px; align-items: flex-start;
+    }
+    .footer-link-col {
+      display: flex; flex-direction: column;
+      gap: 16px; align-items: flex-start;
+      min-width: 160px;
+    }
+    .footer-col-title {
+      font-family: 'Inter'; font-weight: 500;
+      font-size: 14px; line-height: 20px;
+      color: #fff; width: 100%;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; width: 100%; }
+    .footer-link  {
+      font-family: 'Inter'; font-weight: 400;
+      font-size: 14px; line-height: 20px;
+      color: #757575; white-space: nowrap;
+      cursor: default;
+    }
+    .footer-link.primary { color: #fff; }
+    /* Bottom row */
+    .footer-bottom { max-width: 1280px; padding: 0 40px; width: 100%; }
+    .footer-bottom-row {
+      display: flex; flex-wrap: wrap;
+      row-gap: 20px; align-items: center;
+      justify-content: space-between; width: 100%;
+    }
+    .footer-copy {
+      font-family: 'Inter'; font-weight: 400;
+      font-size: 14px; line-height: 20px;
+      color: #e6e6e6; white-space: nowrap;
+    }
+    .footer-socials { display: flex; gap: 16px; align-items: center; }
+    .footer-social {
+      width: 20px; height: 20px;
+      position: relative; flex-shrink: 0;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .footer-social:hover { opacity: 0.7; transform: scale(1.1); }
+    .footer-social img { display: block; max-width: 100%; }
+    /* Big "Acme corp" wordmark at footer bottom */
+    .footer-biglogo-wrap {
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    /* Outer clip: aspect-ratio 1280/288, capped at 288px tall, 1280px wide */
+    .footer-biglogo-clip {
+      aspect-ratio: 1280 / 288;
+      max-height: 288px;
+      max-width: 1280px;
+      width: 100%;
+      overflow: hidden;
+      padding: 0 40px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    /* Positioned wrapper that preserves the image's natural aspect ratio */
+    .footer-biglogo-inner {
+      position: absolute;
+      left: 3.28%;
+      right: 3.33%;
+      top: calc(50% + 35.52px);
+      /* natural aspect ratio of the Acme corp artwork */
+      aspect-ratio: 1195.40625 / 217.44;
+      /* start: hidden below the clip boundary */
+      transform: translateY(calc(-50% + 110%));
+      opacity: 0;
+      transition: transform 0.9s var(--ease-a),
+                  opacity   0.5s ease;
+    }
+    /* Trigger: rise into final position */
+    .footer-biglogo-inner.revealed {
+      transform: translateY(-50%);
+      opacity: 1;
+    }
+    .footer-biglogo-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      max-width: none;
+    }
+
+    /* ── Page switching ── */
+    #page-rec { display: none; }
+    #page-inst { display: none; }
+
+    /* ── Network Gap (institute problem) ── */
+    .net-gap {
+      background: linear-gradient(90deg, rgba(86,158,180,0.35) 5%, rgba(109,127,176,0.35) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; color: transparent;
+    }
+    .net-gap.revealed {
+      background: linear-gradient(90deg, #3dbfb8 5%, #7b6bae 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; color: transparent;
+    }
+
+    /* ── Institute gradient spans (hero + CTA) ── */
+    .grad-teal {
+      background: linear-gradient(90deg, #3dbfb8 5%, #7b6bae 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Footer Overview hover (Recruiters column) ── */
+    .footer-link.primary { cursor: pointer; transition: color 0.15s ease; }
+    .footer-link.primary:hover { color: #c0c0c0; }
+
+    /* ── Signal Gap (recruiter problem) ── */
+    .sig-gap { color: #a8b8d8; transition: color 0.3s ease; }
+    .sig-gap.revealed {
+      background: linear-gradient(90deg, #355dae 5%, #518ce0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* ── Recruiter gradient spans (hero + CTA) ── */
+    .grad-blue {
+      background: linear-gradient(90deg, #162b95 5%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE — Desktop: 1920–1024px  |  Mobile: 425–320px
+    ═══════════════════════════════════════════════════════════════ */
+
+    /* ── Tablet / small desktop (≤1280px) ── */
+    @media (max-width: 1280px) {
+      .nav-inner-wrap { padding: 0 24px; }
+      .nav-row { max-width: 100%; }
+      .hero-content { padding: 96px 24px 0; }
+      .hero-mockup-wrap { padding: 0 24px 48px; }
+      .logo-strip-inner { padding: 0 24px; }
+      .section-header { padding: 0 24px; }
+      .features-group { padding: 24px; }
+      .explore-content { padding: 0 24px; }
+      .faq > div { padding: 0 24px !important; }
+      .cta-text-wrap { padding: 0 24px; }
+      .footer-top, .footer-bottom { padding: 0 24px; }
+      .footer-biglogo-clip { padding: 0 24px; }
+      .problem-inner { padding: 96px 24px; }
+    }
+
+    /* ── Laptop breakpoint (≤1024px) ── */
+    @media (max-width: 1024px) {
+      .hero-headline { font-size: 48px; line-height: 56px; }
+      .features-group { gap: 40px; }
+      .feature-menu-left, .feature-menu-right { max-width: 320px; }
+      .feature-img-wrap { height: 420px; }
+      .feature-img-box, .feature-bg-box { height: 420px; }
+      .footer-cols { gap: 32px 64px; }
+      .footer-link-cols { flex-wrap: wrap; gap: 24px; }
+      .footer-link-col { min-width: 140px; }
+    }
+
+    /* ── Mobile hamburger button ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Mobile (≤768px) — nav collapses ── */
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: #fff;
+        flex-direction: column;
+        padding: 12px 24px 16px;
+        gap: 4px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        z-index: 199;
+      }
+      .nav-links.open { display: flex; }
+      .nav-buttons { gap: 8px; }
+      .nav-buttons .btn-outline, .nav-buttons .btn-dark { padding: 7px 10px; font-size: 13px; }
+    }
+
+    /* ── Mobile (≤425px) ── */
+    @media (max-width: 425px) {
+      /* Hero */
+      .hero-content { padding: 64px 16px 0; gap: 40px; }
+      .hero-headline { font-size: 32px; line-height: 40px; }
+      .hero-sub { font-size: 16px; line-height: 24px; }
+      .hero-buttons { flex-direction: column; width: 100%; }
+      .btn-outline-lg, .btn-dark-lg { width: 100%; text-align: center; padding: 12px 16px; }
+      .hero-mockup-wrap { padding: 0 16px 40px; }
+      .hero-mockup-overlay { width: 90%; height: auto; aspect-ratio: 1076/692; }
+
+      /* Logo strip */
+      .logo-strip { padding: 40px 0; }
+      .logo-strip-inner {
+        padding: 0 16px;
+        gap: 24px;
+        justify-content: center;
+        row-gap: 24px;
+      }
+      .logo-item { flex-shrink: 0; transform: scale(0.8); transform-origin: center; }
+
+      /* Nav */
+      .nav-inner-wrap { padding: 0 16px; }
+      .nav-buttons .btn-outline { display: none; }
+
+      /* Problem */
+      .problem-inner { padding: 64px 16px; }
+      .problem-p1, .problem-p2 { font-size: 24px; line-height: 32px; }
+      .problem-body { gap: 40px; }
+
+      /* Section header */
+      .section-header { padding: 0 16px; }
+      .section-title { font-size: 28px !important; line-height: 36px !important; }
+
+      /* Features */
+      .features { padding: 64px 0; gap: 40px; }
+      .features-group {
+        flex-direction: column;
+        padding: 16px;
+        gap: 24px;
+      }
+      .feature-menu-left,
+      .feature-menu-right {
+        max-width: 100%;
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        border-top: 2px solid #e6e6e6;
+      }
+      .feature-card.active-left::before,
+      .feature-card.active-right::before {
+        top: -2px;
+        left: 0;
+        right: auto;
+        width: 100%;
+        height: 2px;
+      }
+      .feature-card.active-left::before { animation: featureLoadH 5s linear forwards; }
+      @keyframes featureLoadH { from { width: 0%; } to { width: 100%; } }
+      .feature-menu-left .feature-card::after,
+      .feature-menu-right .feature-card::after { display: none; }
+      .feature-img-wrap { height: auto; width: 100%; order: -1; }
+      .feature-img-box, .feature-bg-box { height: 220px; }
+      .feature-img-inner { width: 100%; height: 100%; left: 0; border-radius: 16px; }
+
+      /* Explore */
+      .explore { padding: 64px 0; gap: 40px; }
+      .explore-content { padding: 0 16px; gap: 24px; }
+      .explore-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0;
+        justify-content: flex-start;
+      }
+      .explore-tabs::-webkit-scrollbar { display: none; }
+      .explore-tab { flex-shrink: 0; padding: 12px 16px; }
+      .explore-tab-title { font-size: 14px; }
+      .explore-overlay { width: 90%; height: auto; aspect-ratio: 1076/692; }
+
+      /* FAQ */
+      .faq { padding: 64px 0; gap: 40px; }
+      .faq > div { padding: 0 16px !important; }
+      .faq-q { font-size: 16px; line-height: 24px; }
+      .faq-a { font-size: 14px; line-height: 22px; }
+      .faq-item { padding: 20px; }
+
+      /* CTA */
+      .cta { padding: 64px 0; gap: 32px; }
+      .cta-text-wrap { padding: 0 16px; }
+      .cta-headline { font-size: 32px !important; line-height: 40px !important; }
+      .cta-buttons { flex-direction: column; width: 100%; padding: 0 16px; box-sizing: border-box; }
+
+      /* Footer */
+      .footer-top, .footer-bottom { padding: 0 16px; }
+      .footer-cols { flex-direction: column; gap: 32px; }
+      .footer-link-cols { flex-wrap: wrap; gap: 24px 16px; }
+      .footer-link-col { min-width: calc(50% - 8px); }
+      .footer-bottom-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-biglogo-clip { padding: 0 16px; }
+      .footer-main { gap: 40px; }
+    }
+
+    /* ── Narrow mobile (≤375px) ── */
+    @media (max-width: 375px) {
+      .hero-headline { font-size: 28px; line-height: 36px; }
+      .cta-headline { font-size: 28px !important; line-height: 36px !important; }
+      .problem-p1, .problem-p2 { font-size: 22px; line-height: 30px; }
+      .footer-link-col { min-width: 100%; }
+    }
+
+  </style>
+</head>
+<body>
+<div style="width:100%;max-width:1920px;margin:0 auto;position:relative;">
+
+  <!-- ═══════════════════════════ NAV ══════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner-wrap">
+      <div class="nav-row">
+        <!-- Logo — inline SVG spark + text, no external img -->
+        <a href="#" class="nav-logo" data-page="js">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0 C8 0 8.6 5.4 11.3 8 C8.6 10.6 8 16 8 16 C8 16 7.4 10.6 4.7 8 C7.4 5.4 8 0 8 0Z" fill="#111"/>
+            <path d="M0 8 C0 8 5.4 8.6 8 11.3 C10.6 8.6 16 8 16 8 C16 8 10.6 7.4 8 4.7 C5.4 7.4 0 8 0 8Z" fill="#111"/>
+          </svg>
+          <span class="nav-logo-text">Acme Corp</span>
+        </a>
+        <!-- Links: Job seekers, Recruiters, Institutes, Blog -->
+        <nav class="nav-links">
+          <a href="#" class="nav-link" data-page="js">Job seekers</a>
+          <a href="#" class="nav-link" data-page="rec">Recruiters</a>
+          <a href="#" class="nav-link" data-page="inst">Institutes</a>
+        </nav>
+        <!-- CTA -->
+        <div class="nav-buttons">
+          <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+          <button class="btn-outline">Log in</button>
+          <button class="btn-dark">Sign up</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ JOBSEEKERS PAGE ════════════════ -->
+  <div id="page-js">
+
+  <!-- ══════════════════════════ HERO ══════════════════════════════ -->
+  <section class="hero-wrap">
+    <!-- BG grid — pure CSS, instant, no external images -->
+    <div class="hero-bg-pattern"></div>
+
+    <!-- Hero text + buttons -->
+    <div class="hero-content">
+      <div style="display:flex;flex-direction:column;align-items:center;width:100%;">
+        <div class="hero-text-block">
+          <h1 class="hero-headline anim-fadeup d100">
+            Stop Being Just Another Resume. Become a <span class="grad">Verified Professional</span>
+          </h1>
+          <p class="hero-sub anim-fadeup d200">
+            Acme Corp builds your verified skill profile — one that speaks before you do. Set it up once, and let the right opportunities find you.
+          </p>
+          <div class="hero-buttons anim-fadeup d320">
+            <button class="btn-outline-lg">Log in</button>
+            <button class="btn-dark-lg">Signup</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mockup -->
+      <div class="hero-mockup-wrap anim-scalup d440">
+        <div class="hero-mockup">
+          <img class="bg" src="acme-assets/bf103610-8d89-491f-a27e-ed0419f454a7.jpg" alt="">
+          <div class="hero-mockup-overlay">
+            <img src="acme-assets/7dbbe92a-79db-4e49-99dc-4f7edc1bbcbe.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo strip -->
+    <div class="logo-strip">
+      <div class="logo-strip-inner rv">
+        <!-- Logo 1: Netflix -->
+        <div class="logo-item" id="logo-netflix" style="width:165px;height:40px;">
+          <div style="position:absolute;left:10.25%;right:10.25%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:3.249px;">
+            <img src="acme-assets/1ac56b57-0d5c-4623-bfd8-f21b24bbfdad.svg" alt="" style="height:33.501px;width:124.693px;display:block;">
+          </div>
+        </div>
+        <!-- Logo 2: Stripe -->
+        <div class="logo-item" id="logo-stripe" style="width:165px;height:40px;">
+          <div style="position:absolute;left:23.39%;right:23.39%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:2.963px;">
+            <img src="acme-assets/31eb6cdd-0261-46ad-a161-dc5cd3258488.svg" alt="" style="height:34.074px;width:81.89px;display:block;">
+          </div>
+        </div>
+        <!-- Logo 3: Framer -->
+        <div class="logo-item" id="logo-framer" style="width:165px;height:40px;">
+          <div style="position:absolute;left:2.76%;right:2.76%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:3.053px;">
+            <div style="display:flex;gap:19.842px;align-items:center;">
+              <img src="acme-assets/7fe5a849-4756-4d92-a979-f0e18e8f9319.svg" alt="" style="height:33.895px;width:22.597px;display:block;flex-shrink:0;">
+              <img src="acme-assets/213b6b8e-b417-4495-8e55-baf2a07426d9.svg" alt="" style="height:23.083px;width:107.333px;display:block;">
+            </div>
+          </div>
+        </div>
+        <!-- Logo 4: Dropbox -->
+        <div class="logo-item" id="logo-dropbox" style="padding:3.249px;">
+          <div style="display:flex;gap:8.123px;align-items:flex-end;">
+            <img src="acme-assets/b0e278d1-90f6-492a-9b70-208fb51d3654.svg" alt="" style="height:33.501px;width:39.435px;display:block;">
+            <img src="acme-assets/d1a6e6b6-a23b-46c0-88ff-f69cef1b6ea2.svg" alt="" style="height:28.46px;width:122.98px;display:block;">
+          </div>
+        </div>
+        <!-- Logo 5: HubSpot -->
+        <div class="logo-item" id="logo-hubspot" style="padding:3.249px;">
+          <div style="padding:3.053px;">
+            <img src="acme-assets/accf31fc-66d0-4f14-bd8e-6d7c5591a5b5.svg" alt="" style="height:33.895px;width:119px;display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PROBLEM ═══════════════════════════ -->
+  <div class="problem-scroll-wrap" id="problemWrap">
+    <section class="problem" id="problemSection">
+      <div class="problem-inner">
+        <div class="problem-body">
+          <p class="problem-p1">You've worked hard to build your skills. But every application still buries you in a pile of thousands — invisible to recruiters, filtered out before anyone reads your name. This is the <span class="vis-gap">Visibility Gap.</span></p>
+          <p class="problem-p2">Acme Corp verifies who you are upfront. You're not just applying — you're arriving with proof.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════════════════════ FEATURES 1 ══════════════════════════════ -->
+  <!-- ════════════════════ FEATURES 1 — Jobseeker ═════════════════ -->
+  <section class="features" id="features1">
+    <div class="section-header rv">
+      <p class="section-title" style="font-family:'Instrument Sans',sans-serif;font-size:40px;line-height:48px;font-variation-settings:'wdth' 100;">The Journey to Getting Noticed</p>
+    </div>
+    <div class="features-group rv">
+      <!-- Left menu -->
+      <div class="feature-menu-left" id="fmenu1">
+        <button class="feature-card active-left loading" data-idx="0">
+          <span class="feature-card-title">Verified Skill Profile</span>
+          <span class="feature-card-desc">Build a profile that proves your skills before a recruiter even reads your name</span>
+        </button>
+        <button class="feature-card" data-idx="1">
+          <span class="feature-card-title">Job Match Feed</span>
+          <span class="feature-card-desc">See only the roles that match your verified skills, not a generic keyword dump</span>
+        </button>
+        <button class="feature-card" data-idx="2">
+          <span class="feature-card-title">Career Insights</span>
+          <span class="feature-card-desc">Discover what skills are in demand before you apply so you're always one step ahead</span>
+        </button>
+        <button class="feature-card" data-idx="3">
+          <span class="feature-card-title">Resume Builder</span>
+          <span class="feature-card-desc">Generate a verified, ATS-ready resume from your profile in one click</span>
+        </button>
+      </div>
+      <!-- Right image: 4 slides stacked, JS shows active one -->
+      <div class="feature-img-wrap" id="fslides1">
+        <!-- Slide 0: Verified Skill Profile -->
+        <div class="feature-slide visible" data-slide="0">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f1ov0.jpg" alt=""
+                  style="top:7.64%;left:6.83%;height:84.6%;width:110.26%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 1: Job Match Feed -->
+        <div class="feature-slide" data-slide="1">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f1ov1.jpg" alt=""
+                  style="top:9.37%;left:1.81%;height:81.28%;width:142.95%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2: Career Insights -->
+        <div class="feature-slide" data-slide="2">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f1ov2.jpg" alt=""
+                  style="top:7.94%;left:2.56%;height:84.11%;width:155.19%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3: Resume Builder -->
+        <div class="feature-slide" data-slide="3">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f1ov3.jpg" alt=""
+                  style="top:9.35%;left:2.54%;height:81.3%;width:125.73%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ FEATURES 2 — Recruiter ══════════════════ -->
+  <section class="features" id="features2">
+    <div class="section-header rv">
+      <p class="section-title" style="font-family:'Instrument Sans',sans-serif;font-size:40px;line-height:48px;font-variation-settings:'wdth' 100;">From Profile to Opportunity</p>
+    </div>
+    <div class="features-group rv" style="justify-content:flex-end;">
+      <!-- Left image: 4 slides -->
+      <div class="feature-img-wrap" id="fslides2">
+        <!-- Slide 0: Recruiter Discovery -->
+        <div class="feature-slide visible" data-slide="0">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f2ov0.jpg" alt=""
+                  style="top:8.12%;left:6.88%;height:87.51%;width:136.24%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 1: Application Tracker -->
+        <div class="feature-slide" data-slide="1">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f2ov1.jpg" alt=""
+                  style="top:4.28%;left:0.05%;height:91.34%;width:248.55%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2: Skill Gap Analysis -->
+        <div class="feature-slide" data-slide="2">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f2ov2.jpg" alt=""
+                  style="top:6.41%;left:3.57%;height:87.36%;width:138.05%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3: Interview Prep -->
+        <div class="feature-slide" data-slide="3">
+          <div class="feature-img-box">
+            <div class="feature-bg-box">
+              <img class="bg" src="acme-assets/js-f1bg0.jpg" alt="">
+            </div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/js-f2ov3.jpg" alt=""
+                  style="top:7.29%;left:3.52%;height:85.44%;width:136.09%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right menu -->
+      <div class="feature-menu-right" id="fmenu2">
+        <button class="feature-card active-right loading" data-idx="0">
+          <span class="feature-card-title">Recruiter Discovery</span>
+          <span class="feature-card-desc">Get found by recruiters actively searching for what you bring to the table</span>
+        </button>
+        <button class="feature-card" data-idx="1">
+          <span class="feature-card-title">Application Tracker</span>
+          <span class="feature-card-desc">Know exactly where every application stands, all in one place.</span>
+        </button>
+        <button class="feature-card" data-idx="2">
+          <span class="feature-card-title">Skill Gap Analysis</span>
+          <span class="feature-card-desc">See what's missing between you and your target role, then close it fast.</span>
+        </button>
+        <button class="feature-card" data-idx="3">
+          <span class="feature-card-title">Interview Prep</span>
+          <span class="feature-card-desc">AI-powered prep tailored to the roles you're actively pursuing.</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ EXPLORE ═══════════════════════════ -->
+  <section class="explore" id="exploreSection">
+    <div class="section-header rv">
+      <p class="section-title" style="font-family:'Instrument Sans',sans-serif;font-size:40px;line-height:48px;font-variation-settings:'wdth' 100;">Explore More</p>
+    </div>
+    <div class="explore-content rv">
+      <!-- Tab bar -->
+      <div class="explore-tabs" id="etabs">
+        <button class="explore-tab active" data-idx="0"><span class="explore-tab-title">How Verification Works</span></button>
+        <button class="explore-tab" data-idx="1"><span class="explore-tab-title">Building Your Profile</span></button>
+        <button class="explore-tab" data-idx="2"><span class="explore-tab-title">Skill Assessments</span></button>
+        <button class="explore-tab" data-idx="3"><span class="explore-tab-title">Career Success Stories</span></button>
+      </div>
+      <!-- Slides -->
+      <div class="explore-mockup-wrap" id="eslides">
+        <!-- Slide 0: How Verification Works -->
+        <div class="explore-slide visible">
+          <img class="bg" src="acme-assets/explore-bg.jpg" alt="">
+          <div class="explore-overlay">
+            <img src="acme-assets/605b7f20-057d-4041-9c9c-f43960b1d445.jpg" alt="">
+          </div>
+        </div>
+        <!-- Slide 1: Building Your Profile -->
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/explore-bg.jpg" alt="">
+          <div class="explore-overlay">
+            <img src="acme-assets/6c62c5ab-54d3-441a-803e-4b3022671bfe.jpg" alt="">
+          </div>
+        </div>
+        <!-- Slide 2: Skill Assessments -->
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/explore-bg.jpg" alt="">
+          <div class="explore-overlay">
+            <img src="acme-assets/a4c09a40-c826-4ef3-bcbf-2923fcdffeb3.jpg" alt="">
+          </div>
+        </div>
+        <!-- Slide 3: Career Success Stories -->
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/explore-bg.jpg" alt="">
+          <div class="explore-overlay">
+            <img src="acme-assets/ac8215a2-2765-41e1-95c6-3ffa89ac87d6.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ FAQ ══════════════════════════════ -->
+  <section class="faq">
+    <div class="section-header rv">
+      <p class="section-title" style="font-size:48px;line-height:56px;">Frequently Asked Questions</p>
+    </div>
+    <div style="max-width:1280px;padding:0 40px;width:100%;margin:0 auto;display:flex;align-items:center;flex-direction:column;">
+      <div class="faq-list" id="faqList">
+
+        <div class="faq-item open rv" style="--rv-delay:0s">
+          <div class="faq-q-row">
+            <p class="faq-q">How does Acme Corp verify my skills and experience?</p>
+            <div class="faq-icon">
+              <div class="faq-icon-inner">
+                <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="">
+                <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="" style="display:none;">
+              </div>
+            </div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">We use a combination of document verification, skill assessments, and work history checks to build a profile recruiters can trust on sight.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.05s">
+          <div class="faq-q-row">
+            <p class="faq-q">Will recruiters be able to find me without me applying?</p>
+            <div class="faq-icon">
+              <div class="faq-icon-inner">
+                <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+                <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Yes. Once your profile is verified, recruiters actively searching for candidates with your skills can discover and reach out to you directly — no application required.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.10s">
+          <div class="faq-q-row">
+            <p class="faq-q">Is my profile visible to all companies or only ones I choose?</p>
+            <div class="faq-icon">
+              <div class="faq-icon-inner">
+                <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+                <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">You're in full control. You can set your profile to public, restrict it to specific industries or company sizes, or keep it private until you're ready to be discovered.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.15s">
+          <div class="faq-q-row">
+            <p class="faq-q">How is this different from LinkedIn or a regular resume?</p>
+            <div class="faq-icon">
+              <div class="faq-icon-inner">
+                <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+                <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">LinkedIn profiles and resumes are self-reported — anyone can write anything. Acme Corp profiles are independently verified, so recruiters know what they see is real before they even reach out.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.20s">
+          <div class="faq-q-row">
+            <p class="faq-q">How long does it take to set up my verified profile?</p>
+            <div class="faq-icon">
+              <div class="faq-icon-inner">
+                <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+                <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Most users complete their profile in under 20 minutes. Verification typically takes 24–48 hours depending on the documents submitted, after which your profile goes live.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ CTA ══════════════════════════════ -->
+  <section class="cta">
+    <div class="cta-text-wrap">
+      <div class="cta-text-inner">
+        <h2 class="cta-headline">
+          <span class="black">Your career deserves to be</span>
+          <span> </span>
+          <span class="grad">Built on Truth</span>
+        </h2>
+      </div>
+    </div>
+    <div class="cta-buttons">
+      <button class="btn-outline-lg">Log in</button>
+      <button class="btn-dark-lg">Signup</button>
+    </div>
+  </section>
+
+  </div><!-- #page-js -->
+
+  <!-- ═══════════════════ RECRUITERS PAGE ════════════════════════ -->
+  <div id="page-rec">
+
+  <!-- ══════════════════════════ HERO ══════════════════════════════ -->
+  <section class="hero-wrap">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <div style="display:flex;flex-direction:column;align-items:center;width:100%;">
+        <div class="hero-text-block">
+          <h1 class="hero-headline anim-fadeup d100">
+            Stop Chasing Through Noise.<br>Hire with <span class="grad-blue">Actual Signal</span>
+          </h1>
+          <p class="hero-sub anim-fadeup d200">
+            Acme Corp surfaces pre-screened, skill-verified candidates — so your pipeline stays lean, fast, and worth your team's time.
+          </p>
+          <div class="hero-buttons anim-fadeup d320">
+            <button class="btn-outline-lg">Log in</button>
+            <button class="btn-dark-lg">Signup</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-mockup-wrap anim-scalup d440">
+        <div class="hero-mockup">
+          <img class="bg" src="acme-assets/r-hero.jpg" alt="">
+          <div class="hero-mockup-overlay">
+            <img src="acme-assets/r-hero-ov.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Logo strip (shared) -->
+    <div class="logo-strip">
+      <div class="logo-strip-inner">
+        <div class="logo-item logo-netflix" style="width:165px;height:40px;">
+          <div style="position:absolute;left:10.25%;right:10.25%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:3.249px;">
+            <img src="acme-assets/1ac56b57-0d5c-4623-bfd8-f21b24bbfdad.svg" alt="" style="height:33.501px;width:124.693px;display:block;">
+          </div>
+        </div>
+        <div class="logo-item logo-stripe" style="width:165px;height:40px;">
+          <div style="position:absolute;left:23.39%;right:23.39%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:2.963px;">
+            <img src="acme-assets/31eb6cdd-0261-46ad-a161-dc5cd3258488.svg" alt="" style="height:34.074px;width:81.89px;display:block;">
+          </div>
+        </div>
+        <div class="logo-item logo-framer" style="width:165px;height:40px;">
+          <div style="position:absolute;left:2.76%;right:2.76%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:3.053px;">
+            <div style="display:flex;gap:19.842px;align-items:center;">
+              <img src="acme-assets/7fe5a849-4756-4d92-a979-f0e18e8f9319.svg" alt="" style="height:33.895px;width:22.597px;display:block;flex-shrink:0;">
+              <img src="acme-assets/213b6b8e-b417-4495-8e55-baf2a07426d9.svg" alt="" style="height:23.083px;width:107.333px;display:block;">
+            </div>
+          </div>
+        </div>
+        <div class="logo-item logo-dropbox" style="padding:3.249px;">
+          <div style="display:flex;gap:8.123px;align-items:flex-end;">
+            <img src="acme-assets/b0e278d1-90f6-492a-9b70-208fb51d3654.svg" alt="" style="height:33.501px;width:39.435px;display:block;">
+            <img src="acme-assets/d1a6e6b6-a23b-46c0-88ff-f69cef1b6ea2.svg" alt="" style="height:28.46px;width:122.98px;display:block;">
+          </div>
+        </div>
+        <div class="logo-item logo-hubspot" style="padding:3.249px;">
+          <div style="padding:3.053px;">
+            <img src="acme-assets/accf31fc-66d0-4f14-bd8e-6d7c5591a5b5.svg" alt="" style="height:33.895px;width:119px;display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PROBLEM ═══════════════════════════ -->
+  <div class="problem-scroll-wrap" id="recProblemWrap">
+    <section class="problem" id="recProblemSection">
+      <div class="problem-inner">
+        <div class="problem-body">
+          <p class="problem-p1">You post a role and get hundreds of applications overnight. But most are guesses—unverified, unscreened, and eating up your team's time. This is the <span class="sig-gap">Signal Gap.</span></p>
+          <p class="problem-p2">Acme Corp filters before they reach you. Every candidate in your pipeline has already been verified.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════ FEATURE SECTION 1 — Recruiter ═══════════════ -->
+  <section class="features" id="rfeatures1">
+    <div class="section-header rv">
+      <p class="section-title">The Smarter Way to Screen</p>
+    </div>
+    <div class="features-group rv">
+      <div class="feature-menu-left" id="rfmenu1">
+        <button class="feature-card active-left loading" data-idx="0">
+          <span class="feature-card-title">AI Screening</span>
+          <span class="feature-card-desc">Every candidate reaching your pipeline has already been verified and pre-screened</span>
+        </button>
+        <button class="feature-card" data-idx="1">
+          <span class="feature-card-title">Candidate Matching</span>
+          <span class="feature-card-desc">Surface the right profiles instantly based on role requirements, not guesswork.</span>
+        </button>
+        <button class="feature-card" data-idx="2">
+          <span class="feature-card-title">Pipeline Analytics</span>
+          <span class="feature-card-desc">Full visibility into where every hire stands at every stage, in real time.</span>
+        </button>
+        <button class="feature-card" data-idx="3">
+          <span class="feature-card-title">Offer Management</span>
+          <span class="feature-card-desc">Streamline the entire offer process, from creation and approvals to candidate acceptance.</span>
+        </button>
+      </div>
+      <div class="feature-img-wrap" id="rfslides1">
+        <div class="feature-slide visible" data-slide="0">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f1s0.jpg" alt="" style="top:5.04%;left:3.02%;height:94.81%;width:131.89%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="1">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f1s1.jpg" alt="" style="top:6.99%;left:2.33%;height:85.99%;width:132.77%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="2">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f1s2.jpg" alt="" style="top:5.24%;left:2.51%;height:89.41%;width:158.18%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="3">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f1s3.jpg" alt="" style="top:10.49%;left:2.56%;height:78.99%;width:153.84%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FEATURE SECTION 2 — Recruiter ═══════════════ -->
+  <section class="features" id="rfeatures2">
+    <div class="section-header rv">
+      <p class="section-title">From Pipeline to Decision</p>
+    </div>
+    <div class="features-group rv" style="justify-content:flex-end;">
+      <div class="feature-img-wrap" id="rfslides2">
+        <div class="feature-slide visible" data-slide="0">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f2s0.jpg" alt="" style="top:5.64%;left:3.62%;height:92.48%;width:128.64%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="1">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f2s1.jpg" alt="" style="top:7.85%;left:3.43%;height:88.54%;width:139.5%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="2">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f2s2.jpg" alt="" style="top:7.71%;left:2.98%;height:88.6%;width:171.86%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="3">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/r-bg.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/r-f2s3.jpg" alt="" style="top:7.97%;left:2.14%;height:88.36%;width:203.64%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-menu-right" id="rfmenu2">
+        <button class="feature-card active-right loading" data-idx="0">
+          <span class="feature-card-title">Bulk Outreach</span>
+          <span class="feature-card-desc">Reach verified candidates at scale without sacrificing personalization</span>
+        </button>
+        <button class="feature-card" data-idx="1">
+          <span class="feature-card-title">Collaboration Tools</span>
+          <span class="feature-card-desc">Loop in your hiring team, share feedback, and align on decisions fast.</span>
+        </button>
+        <button class="feature-card" data-idx="2">
+          <span class="feature-card-title">ATS Integration</span>
+          <span class="feature-card-desc">Connects with your existing tools in minutes, no heavy onboarding required.</span>
+        </button>
+        <button class="feature-card" data-idx="3">
+          <span class="feature-card-title">Hiring Reports</span>
+          <span class="feature-card-desc">Track time-to-hire, drop-off rates, and pipeline health across every role.</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ EXPLORE — Recruiter ═════════════════ -->
+  <section class="explore" id="rExploreSection">
+    <div class="section-header rv">
+      <p class="section-title">Explore More</p>
+    </div>
+    <div class="explore-content rv">
+      <div class="explore-tabs" id="retabs">
+        <button class="explore-tab active" data-idx="0"><span class="explore-tab-title">How Screening Works</span></button>
+        <button class="explore-tab" data-idx="1"><span class="explore-tab-title">Setting Up Your Pipeline</span></button>
+        <button class="explore-tab" data-idx="2"><span class="explore-tab-title">Interview Suite Walkthrough</span></button>
+        <button class="explore-tab" data-idx="3"><span class="explore-tab-title">Hiring Success Stories</span></button>
+      </div>
+      <div class="explore-mockup-wrap" id="reslides">
+        <div class="explore-slide visible">
+          <img class="bg" src="acme-assets/r-bg.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/r-eo0.jpg" alt=""></div>
+        </div>
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/r-bg.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/r-eo1.jpg" alt=""></div>
+        </div>
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/r-bg.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/r-eo2.jpg" alt=""></div>
+        </div>
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/r-bg.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/r-eo3.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ FAQ ════════════════════════════ -->
+  <section class="faq">
+    <div class="section-header rv">
+      <p class="section-title" style="font-size:48px;line-height:56px;">Frequently Asked Questions</p>
+    </div>
+    <div style="max-width:1280px;padding:0 40px;width:100%;margin:0 auto;display:flex;align-items:center;flex-direction:column;">
+      <div class="faq-list" id="rfaqList">
+
+        <div class="faq-item open rv" style="--rv-delay:0s">
+          <div class="faq-q-row">
+            <p class="faq-q">How are candidates screened before they reach my pipeline?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="" style="display:none;">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Every candidate goes through identity verification, skill assessment, and work history checks before appearing in your pipeline.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.05s">
+          <div class="faq-q-row">
+            <p class="faq-q">Can Acme Corp integrate with our existing ATS?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Yes. Acme Corp integrates with all major ATS platforms including Workday, Greenhouse, Lever, and SAP SuccessFactors — syncing verified candidates directly into your existing workflow.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.10s">
+          <div class="faq-q-row">
+            <p class="faq-q">What does the verification process look like from a candidate's side?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Candidates complete a 20-minute setup — uploading identity documents, taking skill assessments, and linking work history. Our system verifies in 24–48 hours, then they appear in recruiter search results.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.15s">
+          <div class="faq-q-row">
+            <p class="faq-q">How quickly can we start seeing qualified candidates?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Most teams see their first verified candidates within 48 hours of posting a role. Our pipeline of 50,000+ verified professionals means you're never starting from zero.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ CTA ═══════════════════════════ -->
+  <section class="cta">
+    <div class="cta-text-wrap">
+      <div class="cta-text-inner">
+        <h2 class="cta-headline">
+          Your Next Best Hire Is <span class="grad-blue">Already Here</span>
+        </h2>
+      </div>
+    </div>
+    <div class="cta-buttons">
+      <button class="btn-outline-lg">Log in</button>
+      <button class="btn-dark-lg">Signup</button>
+    </div>
+  </section>
+
+  </div><!-- #page-rec -->
+
+  <div id="page-inst">
+
+  <!-- ══════════════════════════ HERO ══════════════════════════════ -->
+  <section class="hero-wrap">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <div style="display:flex;flex-direction:column;align-items:center;width:100%;">
+        <div class="hero-text-block">
+          <h1 class="hero-headline anim-fadeup d100">
+            Stop Losing Track of Your Alumni.<br>Start <span class="grad-teal">Placing Them</span>
+          </h1>
+          <p class="hero-sub anim-fadeup d200">
+            Acme Corp keeps your alumni network live, searchable, and connected to the right recruiters — automatically, long after graduation day.
+          </p>
+          <div class="hero-buttons anim-fadeup d320">
+            <button class="btn-outline-lg">Log in</button>
+            <button class="btn-dark-lg">Signup</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-mockup-wrap anim-scalup d440">
+        <div class="hero-mockup">
+          <img class="bg" src="acme-assets/i-hero.jpg" alt="">
+          <div class="hero-mockup-overlay">
+            <img src="acme-assets/i-hero-ov.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Logo strip (shared) -->
+    <div class="logo-strip">
+      <div class="logo-strip-inner">
+        <div class="logo-item logo-netflix" style="width:165px;height:40px;">
+          <div style="position:absolute;left:10.25%;right:10.25%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:3.249px;">
+            <img src="acme-assets/1ac56b57-0d5c-4623-bfd8-f21b24bbfdad.svg" alt="" style="height:33.501px;width:124.693px;display:block;">
+          </div>
+        </div>
+        <div class="logo-item logo-stripe" style="width:165px;height:40px;">
+          <div style="position:absolute;left:23.39%;right:23.39%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:2.963px;">
+            <img src="acme-assets/31eb6cdd-0261-46ad-a161-dc5cd3258488.svg" alt="" style="height:34.074px;width:81.89px;display:block;">
+          </div>
+        </div>
+        <div class="logo-item logo-framer" style="width:165px;height:40px;">
+          <div style="position:absolute;left:2.76%;right:2.76%;top:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;padding:3.053px;">
+            <div style="display:flex;gap:19.842px;align-items:center;">
+              <img src="acme-assets/7fe5a849-4756-4d92-a979-f0e18e8f9319.svg" alt="" style="height:33.895px;width:22.597px;display:block;flex-shrink:0;">
+              <img src="acme-assets/213b6b8e-b417-4495-8e55-baf2a07426d9.svg" alt="" style="height:23.083px;width:107.333px;display:block;">
+            </div>
+          </div>
+        </div>
+        <div class="logo-item logo-dropbox" style="padding:3.249px;">
+          <div style="display:flex;gap:8.123px;align-items:flex-end;">
+            <img src="acme-assets/b0e278d1-90f6-492a-9b70-208fb51d3654.svg" alt="" style="height:33.501px;width:39.435px;display:block;">
+            <img src="acme-assets/d1a6e6b6-a23b-46c0-88ff-f69cef1b6ea2.svg" alt="" style="height:28.46px;width:122.98px;display:block;">
+          </div>
+        </div>
+        <div class="logo-item logo-hubspot" style="padding:3.249px;">
+          <div style="padding:3.053px;">
+            <img src="acme-assets/accf31fc-66d0-4f14-bd8e-6d7c5591a5b5.svg" alt="" style="height:33.895px;width:119px;display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PROBLEM ═══════════════════════════ -->
+  <div class="problem-scroll-wrap" id="instProblemWrap">
+    <section class="problem" id="instProblemSection">
+      <div class="problem-inner">
+        <div class="problem-body">
+          <p class="problem-p1">Your alumni leave campus and disappear into the world. You lose track, lose contact — and lose the ability to connect them with the opportunities they deserve. This is the <span class="net-gap">Network Gap.</span></p>
+          <p class="problem-p2">Acme Corp keeps your alumni network alive and connected to the right recruiters, automatically.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════ FEATURE SECTION 1 — Institute ════════════════ -->
+  <section class="features" id="ifeatures1">
+    <div class="section-header rv">
+      <p class="section-title">The Network That Never Goes Cold</p>
+    </div>
+    <div class="features-group rv">
+      <div class="feature-menu-left" id="ifmenu1">
+        <button class="feature-card active-left loading" data-idx="0">
+          <span class="feature-card-title">Alumni Directory</span>
+          <span class="feature-card-desc">A live, searchable directory of every graduate — always current, never stale.</span>
+        </button>
+        <button class="feature-card" data-idx="1">
+          <span class="feature-card-title">Recruiter Connect</span>
+          <span class="feature-card-desc">Bridge your alumni directly to companies actively looking to hire.</span>
+        </button>
+        <button class="feature-card" data-idx="2">
+          <span class="feature-card-title">Institute Verification</span>
+          <span class="feature-card-desc">Verify identity, education, and skills through a guided process to build trust and unlock exclusive career opportunities.</span>
+        </button>
+        <button class="feature-card" data-idx="3">
+          <span class="feature-card-title">Alumni Engagement</span>
+          <span class="feature-card-desc">Keep graduates connected to their institution long after graduation day.</span>
+        </button>
+      </div>
+      <div class="feature-img-wrap" id="ifslides1">
+        <div class="feature-slide visible" data-slide="0">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f1ov0.jpg" alt="" style="top:5.89%;left:2.19%;height:91.28%;width:126.98%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="1">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f1ov1.jpg" alt="" style="top:4.74%;left:3.09%;height:93.05%;width:145.1%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="2">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f1ov2.jpg" alt="" style="top:7.32%;left:5.53%;height:85.19%;width:125.09%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="3">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f1ov3.jpg" alt="" style="top:6.43%;left:3.41%;height:90.76%;width:157.42%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FEATURE SECTION 2 — Institute ════════════════ -->
+  <section class="features" id="ifeatures2">
+    <div class="section-header rv">
+      <p class="section-title">From Data to Proof</p>
+    </div>
+    <div class="features-group rv" style="justify-content:flex-end;">
+      <div class="feature-img-wrap" id="ifslides2">
+        <div class="feature-slide visible" data-slide="0">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f2ov0.jpg" alt="" style="top:8.02%;left:1.63%;height:87.67%;width:230.25%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="1">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f2ov1.jpg" alt="" style="top:4.45%;left:1.74%;height:91.27%;width:191.6%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="2">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f2ov2.jpg" alt="" style="top:7.68%;left:3.61%;height:84.72%;width:192.94%;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-slide" data-slide="3">
+          <div class="feature-img-box">
+            <div class="feature-bg-box"><img class="bg" src="acme-assets/i-hero.jpg" alt=""></div>
+            <div class="feature-img-overlay">
+              <div class="feature-img-inner">
+                <img src="acme-assets/i-f2ov3.jpg" alt="" style="top:5.7%;left:2.57%;height:88.44%;width:150.68%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-menu-right" id="ifmenu2">
+        <button class="feature-card active-right loading" data-idx="0">
+          <span class="feature-card-title">Placement Dashboard</span>
+          <span class="feature-card-desc">Track offer rates, employer connections, and student readiness in real time.</span>
+        </button>
+        <button class="feature-card" data-idx="1">
+          <span class="feature-card-title">Placement Reports</span>
+          <span class="feature-card-desc">Export verified placement data ready for accreditation and board presentations.</span>
+        </button>
+        <button class="feature-card" data-idx="2">
+          <span class="feature-card-title">Employer Partnerships</span>
+          <span class="feature-card-desc">Build and manage long-term relationships with your top hiring companies.</span>
+        </button>
+        <button class="feature-card" data-idx="3">
+          <span class="feature-card-title">Cohort Analytics</span>
+          <span class="feature-card-desc">Compare placement performance across batches, departments, and years.</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ EXPLORE — Institute ═════════════════ -->
+  <section class="explore" id="iExploreSection">
+    <div class="section-header rv">
+      <p class="section-title">Explore More</p>
+    </div>
+    <div class="explore-content rv">
+      <div class="explore-tabs" id="ietabs">
+        <button class="explore-tab active" data-idx="0"><span class="explore-tab-title">How Alumni Connect</span></button>
+        <button class="explore-tab" data-idx="1"><span class="explore-tab-title">Setting Up Your Directory</span></button>
+        <button class="explore-tab" data-idx="2"><span class="explore-tab-title">Managing Campus Drives</span></button>
+        <button class="explore-tab" data-idx="3"><span class="explore-tab-title">Placement Success Stories</span></button>
+      </div>
+      <div class="explore-mockup-wrap" id="ieslides">
+        <div class="explore-slide visible">
+          <img class="bg" src="acme-assets/i-hero.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/i-eov0.jpg" alt=""></div>
+        </div>
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/i-hero.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/i-eov1.jpg" alt=""></div>
+        </div>
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/i-hero.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/i-eov2.jpg" alt=""></div>
+        </div>
+        <div class="explore-slide">
+          <img class="bg" src="acme-assets/i-hero.jpg" alt="">
+          <div class="explore-overlay"><img src="acme-assets/i-eov3.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ FAQ ════════════════════════════ -->
+  <section class="faq">
+    <div class="section-header rv">
+      <p class="section-title" style="font-size:48px;line-height:56px;">Frequently Asked Questions</p>
+    </div>
+    <div style="max-width:1280px;padding:0 40px;width:100%;margin:0 auto;display:flex;align-items:center;flex-direction:column;">
+      <div class="faq-list" id="ifaqList">
+
+        <div class="faq-item open rv" style="--rv-delay:0s">
+          <div class="faq-q-row">
+            <p class="faq-q">How does Acme Corp connect our alumni with recruiters?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="" style="display:none;">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Your alumni directory becomes a live, searchable network. Recruiters on Hirelens can discover and reach out to your graduates directly based on skills and availability.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.05s">
+          <div class="faq-q-row">
+            <p class="faq-q">Can we track placement outcomes and export reports?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Yes. Your Placement Dashboard gives real-time visibility into offer rates, company partnerships, and student readiness. Export verified reports for accreditation or board reviews in one click.</p>
+          </div>
+        </div>
+
+        <div class="faq-item rv" style="--rv-delay:0.10s">
+          <div class="faq-q-row">
+            <p class="faq-q">What does onboarding look like for an institution?</p>
+            <div class="faq-icon"><div class="faq-icon-inner">
+              <img class="chevron-up"   src="acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg" alt="" style="display:none;">
+              <img class="chevron-down" src="acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg" alt="">
+            </div></div>
+          </div>
+          <div class="faq-a-wrap">
+            <p class="faq-a">Setup takes under a week. We import your existing alumni data, verify your institution credentials, and configure your placement dashboard. Your dedicated onboarding team is available throughout.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ CTA ═══════════════════════════ -->
+  <section class="cta">
+    <div class="cta-text-wrap">
+      <div class="cta-text-inner">
+        <h2 class="cta-headline">
+          Your Institution Deserves to <span class="grad-teal">Place Better</span>
+        </h2>
+      </div>
+    </div>
+    <div class="cta-buttons">
+      <button class="btn-outline-lg">Log in</button>
+      <button class="btn-dark-lg">Signup</button>
+    </div>
+  </section>
+
+  </div><!-- #page-inst -->
+
+  <!-- ══════════════════════════ FOOTER ═════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-main">
+
+      <!-- Top: brand + link columns -->
+      <div class="footer-top rv">
+        <div class="footer-cols">
+
+          <!-- Brand col: logo + compliance badges -->
+          <div class="footer-brand">
+            <div class="footer-logo" id="footer-logo-home" style="cursor:pointer;">
+              <img class="lm" src="acme-assets/954a836c-2ee4-4cd9-9ded-968eeba6850a.svg" alt="">
+              <img class="lt" src="acme-assets/30f981f5-fe34-4998-bf7f-a347582ec5f8.svg" alt="">
+            </div>
+            <!-- GDPR + SOC 2 badges — inline SVG, always white on dark bg -->
+            <div class="footer-badges">
+              <!-- GDPR -->
+              <div class="footer-badge">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- outer dashed ring -->
+                  <circle cx="24" cy="24" r="22.5" stroke="white" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+                  <!-- inner solid ring -->
+                  <circle cx="24" cy="24" r="19" stroke="white" stroke-width="0.75"/>
+                  <!-- 12 stars arranged in ring like EU -->
+                  <g fill="white">
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="translate(0,0)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(30,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(60,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(90,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(120,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(150,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(180,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(210,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(240,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(270,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(300,24,24)"/>
+                    <polygon points="24,5  24.5,6.5  26,6.5  24.9,7.4  25.3,8.9  24,8  22.7,8.9  23.1,7.4  22,6.5  23.5,6.5" transform="rotate(330,24,24)"/>
+                  </g>
+                  <!-- GDPR text center -->
+                  <text x="24" y="26.5" text-anchor="middle" fill="white" font-size="8.5" font-weight="700" font-family="Inter,sans-serif" letter-spacing="0.5">GDPR</text>
+                </svg>
+              </div>
+              <!-- SOC 2 (AICPA) -->
+              <div class="footer-badge">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- outer ring -->
+                  <circle cx="24" cy="24" r="22.5" stroke="white" stroke-width="1"/>
+                  <!-- inner ring -->
+                  <circle cx="24" cy="24" r="19.5" stroke="white" stroke-width="0.5"/>
+                  <!-- top arc text placeholder lines -->
+                  <text x="24" y="14" text-anchor="middle" fill="white" font-size="4.5" font-weight="600" font-family="Inter,sans-serif" letter-spacing="1.5">AICPA</text>
+                  <!-- shield icon -->
+                  <path d="M24 17 L29 19.5 L29 24.5 C29 27.5 26.8 30 24 31 C21.2 30 19 27.5 19 24.5 L19 19.5 Z" stroke="white" stroke-width="1" fill="none"/>
+                  <!-- SOC text -->
+                  <text x="24" y="27" text-anchor="middle" fill="white" font-size="6" font-weight="700" font-family="Inter,sans-serif">SOC</text>
+                  <!-- bottom label -->
+                  <text x="24" y="38" text-anchor="middle" fill="white" font-size="4" font-weight="500" font-family="Inter,sans-serif" letter-spacing="0.8">SOC 2</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Link columns -->
+          <div class="footer-link-cols">
+            <!-- For Jobseekers -->
+            <div class="footer-link-col">
+              <span class="footer-col-title">For Jobseekers</span>
+              <div class="footer-links">
+                <a href="#" class="footer-link primary" id="footer-js-ov">Overview</a>
+                <a href="#" class="footer-link">Career Insights</a>
+                <a href="#" class="footer-link">Resume Builder</a>
+                <a href="#" class="footer-link">Job Match Feed</a>
+                <a href="#" class="footer-link">Skill Assessments</a>
+              </div>
+            </div>
+            <!-- For Recruiters -->
+            <div class="footer-link-col">
+              <span class="footer-col-title">For Recruiters</span>
+              <div class="footer-links">
+                <a href="#" class="footer-link primary" id="footer-rec-ov">Overview</a>
+                <a href="#" class="footer-link">Pipeline Analytics</a>
+                <a href="#" class="footer-link">Interview Suite</a>
+                <a href="#" class="footer-link">Integrations</a>
+                <a href="#" class="footer-link">AI Screening</a>
+              </div>
+            </div>
+            <!-- For Institutes -->
+            <div class="footer-link-col">
+              <span class="footer-col-title">For Institutes</span>
+              <div class="footer-links">
+                <a href="#" class="footer-link primary" id="footer-inst-ov">Overview</a>
+                <a href="#" class="footer-link">Campus Drives</a>
+                <a href="#" class="footer-link">Placement Reports</a>
+                <a href="#" class="footer-link">Placement Dashboard</a>
+                <a href="#" class="footer-link">Student Directory</a>
+              </div>
+            </div>
+            <!-- Resources -->
+            <div class="footer-link-col" style="width:160px;">
+              <span class="footer-col-title">Resources</span>
+              <div class="footer-links">
+                <a href="#" class="footer-link">Blogs</a>
+                <a href="#" class="footer-link">Guides</a>
+                <a href="#" class="footer-link">Case Studies</a>
+              </div>
+            </div>
+            <!-- Company -->
+            <div class="footer-link-col" style="width:160px;">
+              <span class="footer-col-title">Company</span>
+              <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Career</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom: copyright + socials -->
+      <div class="footer-bottom rv">
+        <div class="footer-bottom-row">
+          <p class="footer-copy">© 2026 Acme corp. All rights reserved</p>
+          <div class="footer-socials">
+            <!-- X / Twitter: inset 12.5% 8.34% 12.5% 8.68% -->
+            <div class="footer-social">
+              <img src="acme-assets/1dcc801c-c387-4225-bf0c-0418ea364299.svg" alt="X"
+                style="position:absolute;top:12.5%;left:8.68%;right:8.34%;bottom:12.5%;width:83%;height:75%;object-fit:contain;">
+            </div>
+            <!-- LinkedIn: inset 12.5% -->
+            <div class="footer-social">
+              <img src="acme-assets/c892ea3f-ce1e-406a-8b6f-3d628730d826.svg" alt="LinkedIn"
+                style="position:absolute;inset:12.5%;width:75%;height:75%;object-fit:contain;">
+            </div>
+            <!-- Instagram: inset 8.33% -->
+            <div class="footer-social">
+              <img src="acme-assets/ef259dc8-98a5-43e3-8e89-6bca7df8842c.svg" alt="Instagram"
+                style="position:absolute;inset:8.33%;width:83.34%;height:83.34%;object-fit:contain;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Big "Acme corp" wordmark — aspect-ratio preserved, no stretching -->
+    <div class="footer-biglogo-wrap">
+      <div class="footer-biglogo-clip">
+        <div class="footer-biglogo-inner">
+          <img src="acme-assets/7841f4f0-981c-459c-8b9c-8b2c8adbfbc5.svg" alt="Acme corp">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  /* ── Image preloader: fire all 41 Figma CDN assets immediately ── */
+  (function () {
+    var ASSETS = [
+      /* hero / logo strip */
+      'acme-assets/1ac56b57-0d5c-4623-bfd8-f21b24bbfdad.svg',
+      'acme-assets/1dcc801c-c387-4225-bf0c-0418ea364299.svg',
+      'acme-assets/213b6b8e-b417-4495-8e55-baf2a07426d9.svg',
+      'acme-assets/30f981f5-fe34-4998-bf7f-a347582ec5f8.svg',
+      'acme-assets/31eb6cdd-0261-46ad-a161-dc5cd3258488.svg',
+      'acme-assets/7841f4f0-981c-459c-8b9c-8b2c8adbfbc5.svg',
+      'acme-assets/7dbbe92a-79db-4e49-99dc-4f7edc1bbcbe.jpg',
+      'acme-assets/7fe5a849-4756-4d92-a979-f0e18e8f9319.svg',
+      'acme-assets/954a836c-2ee4-4cd9-9ded-968eeba6850a.svg',
+      'acme-assets/accf31fc-66d0-4f14-bd8e-6d7c5591a5b5.svg',
+      'acme-assets/b0e278d1-90f6-492a-9b70-208fb51d3654.svg',
+      'acme-assets/bcf438b3-fb6f-43b9-a608-d179842fba40.svg',
+      'acme-assets/bf103610-8d89-491f-a27e-ed0419f454a7.jpg',
+      'acme-assets/c892ea3f-ce1e-406a-8b6f-3d628730d826.svg',
+      'acme-assets/d1a6e6b6-a23b-46c0-88ff-f69cef1b6ea2.svg',
+      'acme-assets/d5422480-034b-40f3-87c8-82a20a663361.svg',
+      'acme-assets/ef259dc8-98a5-43e3-8e89-6bca7df8842c.svg',
+      /* features1 slides */
+      'acme-assets/js-f1bg0.jpg',
+      'acme-assets/js-f1ov0.jpg',
+      'acme-assets/js-f1ov1.jpg',
+      'acme-assets/js-f1ov2.jpg',
+      'acme-assets/js-f1ov3.jpg',
+      /* features2 slides */
+      'acme-assets/js-f2ov0.jpg',
+      'acme-assets/js-f2ov1.jpg',
+      'acme-assets/js-f2ov2.jpg',
+      'acme-assets/js-f2ov3.jpg',
+      /* explore slides */
+      'acme-assets/explore-bg.jpg',
+      'acme-assets/605b7f20-057d-4041-9c9c-f43960b1d445.jpg',
+      'acme-assets/explore-bg.jpg',
+      'acme-assets/6c62c5ab-54d3-441a-803e-4b3022671bfe.jpg',
+      'acme-assets/explore-bg.jpg',
+      'acme-assets/a4c09a40-c826-4ef3-bcbf-2923fcdffeb3.jpg',
+      'acme-assets/explore-bg.jpg',
+      'acme-assets/ac8215a2-2765-41e1-95c6-3ffa89ac87d6.jpg'
+    ];
+
+    /* Fire all fetches immediately — browser caches before user scrolls */
+    ASSETS.forEach(function (url) {
+      var img = new Image();
+      img.decoding = 'async';
+      img.src = url;
+    });
+
+    /* Mark slide images .loaded once their data arrives (fade-in gracefully) */
+    function markLoaded(img) {
+      if (img.complete && img.naturalWidth) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', function () { img.classList.add('loaded'); });
+        img.addEventListener('error', function () { img.classList.add('loaded'); }); /* show even if 404 */
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll(
+        '.feature-bg-box > img.bg, .feature-img-inner img, .explore-slide > img.bg, .explore-overlay img'
+      ).forEach(markLoaded);
+    });
+  })();
+
+  /* ── Global scroll reveal: Option A — Expressive / Editorial ── */
+  (function () {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("rv-in");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".rv").forEach(function (el) { obs.observe(el); });
+  })();
+
+  /* ── Footer wordmark: cinematic rise on enter ── */
+  (function () {
+    var inner = document.querySelector('.footer-biglogo-inner');
+    if (!inner) return;
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        inner.classList.add('revealed');
+        obs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    obs.observe(inner.closest('.footer-biglogo-clip') || inner);
+  })();
+
+  /* ── Nav: glassmorphic on scroll ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 16);
+  }, { passive: true });
+
+  /* ── Problem section: sticky scroll-scrubbed word reveal ── */
+  (function () {
+    const wrap    = document.getElementById('problemWrap');
+    const section = document.getElementById('problemSection');
+    if (!wrap || !section) return;
+
+    /* Wrap every word in a span.problem-word, preserving child elements (e.g. .vis-gap) */
+    section.querySelectorAll('.problem-p1, .problem-p2').forEach(p => {
+      const originalNodes = Array.from(p.childNodes);
+      p.innerHTML = '';
+      originalNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          node.textContent.split(/(\s+)/).forEach(token => {
+            if (/^\s+$/.test(token)) {
+              p.appendChild(document.createTextNode(token));
+            } else {
+              const sp = document.createElement('span');
+              sp.className = 'problem-word';
+              sp.textContent = token;
+              p.appendChild(sp);
+            }
+          });
+        } else {
+          /* Preserve element nodes (like .vis-gap) as-is — not wrapped */
+          p.appendChild(node.cloneNode(true));
+        }
+      });
+    });
+
+    const words  = Array.from(section.querySelectorAll('.problem-word'));
+    const visGap = section.querySelector('.vis-gap');
+
+    /* Find how many .problem-word spans come before .vis-gap in DOM order */
+    let visGapIndex = words.length; /* default: after all words */
+    if (visGap) {
+      visGapIndex = words.filter(w =>
+        visGap.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_PRECEDING
+      ).length;
+    }
+
+    /* Total slots = words + 1 for vis-gap itself */
+    const totalSlots = words.length + (visGap ? 1 : 0);
+
+    function update() {
+      const wrapTop  = wrap.getBoundingClientRect().top;
+      const scrolled = -wrapTop;
+      const total    = wrap.offsetHeight - window.innerHeight;
+      const progress = Math.max(0, Math.min(1, scrolled / total));
+
+      const reveal = progress * totalSlots;
+
+      /* Regular words */
+      words.forEach((w, i) => {
+        /* shift index: words after vis-gap occupy slot i+1 */
+        const slot = i < visGapIndex ? i : i + 1;
+        if (slot < reveal - 1) {
+          w.classList.add('lit');
+          w.style.color = '';
+        } else if (slot < reveal) {
+          const frac = reveal - slot;
+          const g = Math.round(0xb3 + (0x11 - 0xb3) * frac);
+          w.style.color = `rgb(${g},${g},${g})`;
+          w.classList.remove('lit');
+        } else {
+          w.classList.remove('lit');
+          w.style.color = '';
+        }
+      });
+
+      /* vis-gap: slot = visGapIndex */
+      if (visGap) {
+        visGap.classList.toggle('revealed', reveal > visGapIndex);
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* ── Feature sections: 5s auto-cycle with loader bar + image slides ── */
+  (function () {
+    const DURATION = 5000;
+
+    function initMenu(menuEl, activeClass, slidesEl) {
+      const cards  = Array.from(menuEl.querySelectorAll('.feature-card'));
+      const slides = slidesEl ? Array.from(slidesEl.querySelectorAll('.feature-slide')) : [];
+      let current = 0;
+      let timer   = null;
+      let started = false;
+
+      function activate(idx) {
+        cards.forEach((c, i) => {
+          const isActive = i === idx;
+          c.classList.toggle(activeClass, isActive);
+          c.classList.remove('loading');
+          if (isActive) {
+            void c.offsetWidth; /* force reflow → restarts CSS animation */
+            c.classList.add('loading');
+          }
+        });
+        slides.forEach((s, i) => s.classList.toggle('visible', i === idx));
+        current = idx;
+      }
+
+      function startCycle() {
+        clearInterval(timer);
+        timer = setInterval(() => activate((current + 1) % cards.length), DURATION);
+      }
+
+      function start() {
+        if (started) return;
+        started = true;
+        activate(0);
+        startCycle();
+      }
+
+      cards.forEach((card, i) => {
+        card.addEventListener('click', () => {
+          if (card.classList.contains(activeClass)) return;
+          activate(i);
+          startCycle();
+        });
+      });
+
+      /* Show first card title but NO loading bar until section is visible */
+      cards.forEach((c, i) => c.classList.toggle(activeClass, i === 0));
+      slides.forEach((s, i) => s.classList.toggle('visible', i === 0));
+
+      const section = menuEl.closest('section');
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          start();
+          observer.disconnect();
+        }
+      }, { threshold: 0.25 });
+      observer.observe(section || menuEl);
+    }
+
+    const menu1   = document.getElementById('fmenu1');
+    const slides1 = document.getElementById('fslides1');
+    const menu2   = document.getElementById('fmenu2');
+    const slides2 = document.getElementById('fslides2');
+
+    if (menu1) initMenu(menu1, 'active-left',  slides1);
+    if (menu2) initMenu(menu2, 'active-right', slides2);
+  })();
+
+  /* ── Explore section: 5s auto-cycle with bottom loader + slides ── */
+  (function () {
+    const tabsEl  = document.getElementById('etabs');
+    const slidesEl = document.getElementById('eslides');
+    if (!tabsEl || !slidesEl) return;
+
+    const tabs   = Array.from(tabsEl.querySelectorAll('.explore-tab'));
+    const slides = Array.from(slidesEl.querySelectorAll('.explore-slide'));
+    const DURATION = 5000;
+    let current = 0;
+    let timer   = null;
+    let started = false;
+
+    function activate(idx) {
+      tabs.forEach((t, i) => {
+        const isActive = i === idx;
+        t.classList.toggle('active', isActive);
+        t.classList.remove('loading');
+        if (isActive) { void t.offsetWidth; t.classList.add('loading'); }
+      });
+      slides.forEach((s, i) => s.classList.toggle('visible', i === idx));
+      current = idx;
+    }
+
+    function startCycle() {
+      clearInterval(timer);
+      timer = setInterval(() => activate((current + 1) % tabs.length), DURATION);
+    }
+
+    function start() {
+      if (started) return;
+      started = true;
+      activate(0);
+      startCycle();
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        if (tab.classList.contains('active')) return;
+        activate(i);
+        startCycle();
+      });
+    });
+
+    /* Show first tab/slide but no loader until section in view */
+    tabs.forEach((t, i) => t.classList.toggle('active', i === 0));
+    slides.forEach((s, i) => s.classList.toggle('visible', i === 0));
+
+    const section = document.getElementById('exploreSection');
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { start(); observer.disconnect(); }
+    }, { threshold: 0.25 });
+    observer.observe(section || tabsEl);
+  })();
+
+  /* ── Nav auto-hide on scroll ── */
+  (function () {
+    var nav = document.getElementById('nav');
+    var lastY = 0;
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          var y = window.scrollY;
+          if (y > lastY && y > 80) {
+            nav.classList.add('nav-hidden');
+          } else {
+            nav.classList.remove('nav-hidden');
+          }
+          lastY = y;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+  /* ── Page switching ── */
+  (function () {
+    const pageJs   = document.getElementById('page-js');
+    const pageRec  = document.getElementById('page-rec');
+    const pageInst = document.getElementById('page-inst');
+    let currentPage = 'js';
+    let recInited = false, instInited = false;
+
+    function switchPage(page) {
+      if (page === currentPage) return;
+      currentPage = page;
+      pageJs.style.display   = page === 'js'   ? 'block' : 'none';
+      pageRec.style.display  = page === 'rec'  ? 'block' : 'none';
+      pageInst.style.display = page === 'inst' ? 'block' : 'none';
+      location.hash = page === 'js' ? '' : page;
+      window.scrollTo(0, 0);
+      /* Observe rv elements on the newly shown page */
+      var container = page === 'js' ? pageJs : page === 'rec' ? pageRec : pageInst;
+      var obs2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('rv-in'); obs2.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12 });
+      container.querySelectorAll('.rv:not(.rv-in)').forEach(function (el) { obs2.observe(el); });
+      if (page === 'rec') {
+        var animEls = document.querySelectorAll('#page-rec .hero-headline, #page-rec .hero-sub, #page-rec .hero-buttons, #page-rec .hero-mockup-wrap');
+        animEls.forEach(function (el) { el.style.animation = 'none'; });
+        void document.getElementById('page-rec').offsetWidth;
+        animEls.forEach(function (el) { el.style.animation = ''; });
+        if (!recInited) { recInited = true; initRecPage(); }
+      }
+      if (page === 'inst') {
+        var animEls = document.querySelectorAll('#page-inst .hero-headline, #page-inst .hero-sub, #page-inst .hero-buttons, #page-inst .hero-mockup-wrap');
+        animEls.forEach(function (el) { el.style.animation = 'none'; });
+        void document.getElementById('page-inst').offsetWidth;
+        animEls.forEach(function (el) { el.style.animation = ''; });
+        if (!instInited) { instInited = true; initInstPage(); }
+      }
+    }
+
+    document.querySelectorAll('[data-page]').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); switchPage(a.dataset.page); });
+    });
+
+    var footerLogoHome = document.getElementById('footer-logo-home');
+    if (footerLogoHome) footerLogoHome.addEventListener('click', function () { switchPage('js'); window.scrollTo(0, 0); });
+
+    var footerJsOv = document.getElementById('footer-js-ov');
+    if (footerJsOv) footerJsOv.addEventListener('click', function (e) { e.preventDefault(); switchPage('js'); });
+
+    var footerRecOv = document.getElementById('footer-rec-ov');
+    if (footerRecOv) footerRecOv.addEventListener('click', function (e) { e.preventDefault(); switchPage('rec'); });
+
+    var footerInstOv = document.getElementById('footer-inst-ov');
+    if (footerInstOv) footerInstOv.addEventListener('click', function (e) { e.preventDefault(); switchPage('inst'); });
+
+    /* Restore page from URL hash on load */
+    var initHash = location.hash.replace('#', '');
+    if (initHash === 'rec' || initHash === 'inst') { switchPage(initHash); }
+  })();
+
+  function initRecPage() {
+    /* ── Recruiter problem scroll ── */
+    (function () {
+      var wrap    = document.getElementById('recProblemWrap');
+      var section = document.getElementById('recProblemSection');
+      if (!wrap || !section) return;
+
+      section.querySelectorAll('.problem-p1, .problem-p2').forEach(function (p) {
+        var nodes = Array.from(p.childNodes);
+        p.innerHTML = '';
+        nodes.forEach(function (node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            node.textContent.split(/(\s+)/).forEach(function (token) {
+              if (/^\s+$/.test(token)) {
+                p.appendChild(document.createTextNode(token));
+              } else {
+                var sp = document.createElement('span');
+                sp.className = 'problem-word';
+                sp.textContent = token;
+                p.appendChild(sp);
+              }
+            });
+          } else {
+            p.appendChild(node.cloneNode(true));
+          }
+        });
+      });
+
+      var words   = Array.from(section.querySelectorAll('.problem-word'));
+      var sigGap  = section.querySelector('.sig-gap');
+      var sigIdx  = words.length;
+      if (sigGap) {
+        sigIdx = words.filter(function (w) {
+          return sigGap.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_PRECEDING;
+        }).length;
+      }
+      var totalSlots = words.length + (sigGap ? 1 : 0);
+
+      function update() {
+        var wrapTop  = wrap.getBoundingClientRect().top;
+        var scrolled = -wrapTop;
+        var total    = wrap.offsetHeight - window.innerHeight;
+        var progress = Math.max(0, Math.min(1, scrolled / total));
+        var reveal   = progress * totalSlots;
+        words.forEach(function (w, i) {
+          var slot = i < sigIdx ? i : i + 1;
+          if (slot < reveal - 1) {
+            w.classList.add('lit'); w.style.color = '';
+          } else if (slot < reveal) {
+            var frac = reveal - slot;
+            var g = Math.round(0xb3 + (0x11 - 0xb3) * frac);
+            w.style.color = 'rgb(' + g + ',' + g + ',' + g + ')';
+            w.classList.remove('lit');
+          } else {
+            w.classList.remove('lit'); w.style.color = '';
+          }
+        });
+        if (sigGap) sigGap.classList.toggle('revealed', reveal > sigIdx);
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+
+    /* ── Recruiter feature sections ── */
+    (function () {
+      var DURATION = 5000;
+      function initMenu(menuEl, activeClass, slidesEl) {
+        var cards  = Array.from(menuEl.querySelectorAll('.feature-card'));
+        var slides = slidesEl ? Array.from(slidesEl.querySelectorAll('.feature-slide')) : [];
+        var current = 0, timer = null, started = false;
+        function activate(idx) {
+          cards.forEach(function (c, i) {
+            var isActive = i === idx;
+            c.classList.toggle(activeClass, isActive);
+            c.classList.remove('loading');
+            if (isActive) { void c.offsetWidth; c.classList.add('loading'); }
+          });
+          slides.forEach(function (s, i) { s.classList.toggle('visible', i === idx); });
+          current = idx;
+        }
+        function startCycle() { clearInterval(timer); timer = setInterval(function () { activate((current + 1) % cards.length); }, DURATION); }
+        function start() { if (started) return; started = true; activate(0); startCycle(); }
+        cards.forEach(function (card, i) {
+          card.addEventListener('click', function () {
+            if (card.classList.contains(activeClass)) return;
+            activate(i); startCycle();
+          });
+        });
+        cards.forEach(function (c, i) { c.classList.toggle(activeClass, i === 0); });
+        slides.forEach(function (s, i) { s.classList.toggle('visible', i === 0); });
+        var sec = menuEl.closest('section');
+        new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { start(); }
+        }, { threshold: 0.25 }).observe(sec || menuEl);
+      }
+      var rm1 = document.getElementById('rfmenu1'), rs1 = document.getElementById('rfslides1');
+      var rm2 = document.getElementById('rfmenu2'), rs2 = document.getElementById('rfslides2');
+      if (rm1) initMenu(rm1, 'active-left',  rs1);
+      if (rm2) initMenu(rm2, 'active-right', rs2);
+    })();
+
+    /* ── Recruiter explore section ── */
+    (function () {
+      var tabsEl   = document.getElementById('retabs');
+      var slidesEl = document.getElementById('reslides');
+      if (!tabsEl || !slidesEl) return;
+      var tabs   = Array.from(tabsEl.querySelectorAll('.explore-tab'));
+      var slides = Array.from(slidesEl.querySelectorAll('.explore-slide'));
+      var DURATION = 5000;
+      var current = 0, timer = null, started = false;
+      function activate(idx) {
+        tabs.forEach(function (t, i) {
+          t.classList.toggle('active', i === idx);
+          t.classList.remove('loading');
+          if (i === idx) { void t.offsetWidth; t.classList.add('loading'); }
+        });
+        slides.forEach(function (s, i) { s.classList.toggle('visible', i === idx); });
+        current = idx;
+      }
+      function startCycle() { clearInterval(timer); timer = setInterval(function () { activate((current + 1) % tabs.length); }, DURATION); }
+      function start() { if (started) return; started = true; activate(0); startCycle(); }
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { if (tab.classList.contains('active')) return; activate(i); startCycle(); });
+      });
+      tabs.forEach(function (t, i) { t.classList.toggle('active', i === 0); });
+      slides.forEach(function (s, i) { s.classList.toggle('visible', i === 0); });
+      var sec = document.getElementById('rExploreSection');
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { start(); }
+      }, { threshold: 0.25 }).observe(sec || tabsEl);
+    })();
+
+    /* ── Recruiter FAQ accordion — always one open ── */
+    (function () {
+      var list = document.getElementById('rfaqList');
+      if (!list) return;
+      list.addEventListener('click', function (e) {
+        var item = e.target.closest('.faq-item');
+        if (!item || item.classList.contains('open')) return;
+        list.querySelectorAll('.faq-item').forEach(function (i) {
+          i.classList.remove('open');
+          i.querySelector('.chevron-up').style.display   = 'none';
+          i.querySelector('.chevron-down').style.display = '';
+        });
+        item.classList.add('open');
+        item.querySelector('.chevron-up').style.display   = '';
+        item.querySelector('.chevron-down').style.display = 'none';
+      });
+    })();
+
+    /* ── Recruiter image loaded classes ── */
+    document.querySelectorAll('#page-rec img').forEach(function (img) {
+      if (img.complete && img.naturalWidth) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load',  function () { img.classList.add('loaded'); });
+        img.addEventListener('error', function () { img.classList.add('loaded'); });
+      }
+    });
+  }
+
+  function initInstPage() {
+    /* ── Institute problem scroll ── */
+    (function () {
+      var wrap    = document.getElementById('instProblemWrap');
+      var section = document.getElementById('instProblemSection');
+      if (!wrap || !section) return;
+
+      section.querySelectorAll('.problem-p1, .problem-p2').forEach(function (p) {
+        var nodes = Array.from(p.childNodes);
+        p.innerHTML = '';
+        nodes.forEach(function (node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            node.textContent.split(/(\s+)/).forEach(function (token) {
+              if (/^\s+$/.test(token)) {
+                p.appendChild(document.createTextNode(token));
+              } else {
+                var sp = document.createElement('span');
+                sp.className = 'problem-word';
+                sp.textContent = token;
+                p.appendChild(sp);
+              }
+            });
+          } else {
+            p.appendChild(node.cloneNode(true));
+          }
+        });
+      });
+
+      var words  = Array.from(section.querySelectorAll('.problem-word'));
+      var netGap = section.querySelector('.net-gap');
+      var netIdx = words.length;
+      if (netGap) {
+        netIdx = words.filter(function (w) {
+          return netGap.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_PRECEDING;
+        }).length;
+      }
+      var totalSlots = words.length + (netGap ? 1 : 0);
+
+      function update() {
+        var wrapTop  = wrap.getBoundingClientRect().top;
+        var scrolled = -wrapTop;
+        var total    = wrap.offsetHeight - window.innerHeight;
+        var progress = Math.max(0, Math.min(1, scrolled / total));
+        var reveal   = progress * totalSlots;
+        words.forEach(function (w, i) {
+          var slot = i < netIdx ? i : i + 1;
+          if (slot < reveal - 1) {
+            w.classList.add('lit'); w.style.color = '';
+          } else if (slot < reveal) {
+            var frac = reveal - slot;
+            var g = Math.round(0xb3 + (0x11 - 0xb3) * frac);
+            w.style.color = 'rgb(' + g + ',' + g + ',' + g + ')';
+            w.classList.remove('lit');
+          } else {
+            w.classList.remove('lit'); w.style.color = '';
+          }
+        });
+        if (netGap) netGap.classList.toggle('revealed', reveal > netIdx);
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+
+    /* ── Institute feature sections ── */
+    (function () {
+      var DURATION = 5000;
+      function initMenu(menuEl, activeClass, slidesEl) {
+        var cards  = Array.from(menuEl.querySelectorAll('.feature-card'));
+        var slides = slidesEl ? Array.from(slidesEl.querySelectorAll('.feature-slide')) : [];
+        var current = 0, timer = null, started = false;
+        function activate(idx) {
+          cards.forEach(function (c, i) {
+            var isActive = i === idx;
+            c.classList.toggle(activeClass, isActive);
+            c.classList.remove('loading');
+            if (isActive) { void c.offsetWidth; c.classList.add('loading'); }
+          });
+          slides.forEach(function (s, i) { s.classList.toggle('visible', i === idx); });
+          current = idx;
+        }
+        function startCycle() { clearInterval(timer); timer = setInterval(function () { activate((current + 1) % cards.length); }, DURATION); }
+        function start() { if (started) return; started = true; activate(0); startCycle(); }
+        cards.forEach(function (card, i) {
+          card.addEventListener('click', function () {
+            if (card.classList.contains(activeClass)) return;
+            activate(i); startCycle();
+          });
+        });
+        cards.forEach(function (c, i) { c.classList.toggle(activeClass, i === 0); });
+        slides.forEach(function (s, i) { s.classList.toggle('visible', i === 0); });
+        var sec = menuEl.closest('section');
+        new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { start(); }
+        }, { threshold: 0.25 }).observe(sec || menuEl);
+      }
+      var im1 = document.getElementById('ifmenu1'), is1 = document.getElementById('ifslides1');
+      var im2 = document.getElementById('ifmenu2'), is2 = document.getElementById('ifslides2');
+      if (im1) initMenu(im1, 'active-left',  is1);
+      if (im2) initMenu(im2, 'active-right', is2);
+    })();
+
+    /* ── Institute explore section ── */
+    (function () {
+      var tabsEl   = document.getElementById('ietabs');
+      var slidesEl = document.getElementById('ieslides');
+      if (!tabsEl || !slidesEl) return;
+      var tabs   = Array.from(tabsEl.querySelectorAll('.explore-tab'));
+      var slides = Array.from(slidesEl.querySelectorAll('.explore-slide'));
+      var DURATION = 5000;
+      var current = 0, timer = null, started = false;
+      function activate(idx) {
+        tabs.forEach(function (t, i) {
+          t.classList.toggle('active', i === idx);
+          t.classList.remove('loading');
+          if (i === idx) { void t.offsetWidth; t.classList.add('loading'); }
+        });
+        slides.forEach(function (s, i) { s.classList.toggle('visible', i === idx); });
+        current = idx;
+      }
+      function startCycle() { clearInterval(timer); timer = setInterval(function () { activate((current + 1) % tabs.length); }, DURATION); }
+      function start() { if (started) return; started = true; activate(0); startCycle(); }
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { if (tab.classList.contains('active')) return; activate(i); startCycle(); });
+      });
+      tabs.forEach(function (t, i) { t.classList.toggle('active', i === 0); });
+      slides.forEach(function (s, i) { s.classList.toggle('visible', i === 0); });
+      var sec = document.getElementById('iExploreSection');
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { start(); }
+      }, { threshold: 0.25 }).observe(sec || tabsEl);
+    })();
+
+    /* ── Institute FAQ accordion — always one open ── */
+    (function () {
+      var list = document.getElementById('ifaqList');
+      if (!list) return;
+      list.addEventListener('click', function (e) {
+        var item = e.target.closest('.faq-item');
+        if (!item || item.classList.contains('open')) return;
+        list.querySelectorAll('.faq-item').forEach(function (i) {
+          i.classList.remove('open');
+          i.querySelector('.chevron-up').style.display   = 'none';
+          i.querySelector('.chevron-down').style.display = '';
+        });
+        item.classList.add('open');
+        item.querySelector('.chevron-up').style.display   = '';
+        item.querySelector('.chevron-down').style.display = 'none';
+      });
+    })();
+
+    /* ── Institute image loaded classes ── */
+    document.querySelectorAll('#page-inst img').forEach(function (img) {
+      if (img.complete && img.naturalWidth) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load',  function () { img.classList.add('loaded'); });
+        img.addEventListener('error', function () { img.classList.add('loaded'); });
+      }
+    });
+  }
+
+  /* ── Mobile nav hamburger toggle ── */
+  (function () {
+    var btn = document.getElementById('navHamburger');
+    var links = document.querySelector('.nav-links');
+    if (!btn || !links) return;
+    btn.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      btn.classList.toggle('open', open);
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) {
+        links.classList.remove('open');
+        btn.classList.remove('open');
+      }
+    });
+  })();
+
+  /* ── FAQ accordion — always one open ── */
+  (function () {
+    const list = document.getElementById('faqList');
+    if (!list) return;
+    list.addEventListener('click', function (e) {
+      const item = e.target.closest('.faq-item');
+      if (!item || item.classList.contains('open')) return;
+      list.querySelectorAll('.faq-item').forEach(function (i) {
+        i.classList.remove('open');
+        i.querySelector('.chevron-up').style.display   = 'none';
+        i.querySelector('.chevron-down').style.display = '';
+      });
+      item.classList.add('open');
+      item.querySelector('.chevron-up').style.display   = '';
+      item.querySelector('.chevron-down').style.display = 'none';
+    });
+  })();
+</script>
+</body>
+</html>
